@@ -1,0 +1,21 @@
+.main-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.main-container .content {
+	display: flex;
+	background: linear-gradient(to right, #e8f9f5, #f0f4f7, #f6f6f6);
+}
+
+.main-wrapper {
+	position: fixed;
+	height: calc(100vh - 50px);
+	width: calc(100vw - 250px);
+	top: 50px;
+	left: 250px;
+	background: linear-gradient(to right, #e8f9f5, #f0f4f7, #f6f6f6);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
