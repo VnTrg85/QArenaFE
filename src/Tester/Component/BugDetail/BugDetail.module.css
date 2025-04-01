@@ -1,0 +1,310 @@
+.bug-wrapper {
+	display: flex;
+	gap: 10px;
+	background: #e8f9f5;
+	border-radius: 10px;
+}
+/* 🎨 Tổng thể - Tối giản & chuyên nghiệp */
+.bug-container {
+	max-width: 800px;
+	padding: 24px;
+	/* background: #ffffff; */
+	border-radius: 10px;
+	font-family: "DM Sans", sans-serif;
+	color: #333;
+	transition: all 0.3s ease-in-out;
+}
+
+/* 📌 Tiêu đề chính */
+.bug-container h2 {
+	font-size: 22px;
+	font-weight: 600;
+	color: #222;
+	margin-bottom: 16px;
+	border-left: 4px solid #027f77;
+	padding-left: 12px;
+}
+
+/* 🔗 URL */
+.url {
+	font-size: 15px;
+	font-weight: 500;
+	padding: 10px;
+	background: white;
+	border-radius: 6px;
+}
+
+.url a {
+	color: #027f77;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.url a:hover {
+	text-decoration: underline;
+}
+
+/* 🎥 Video đính kèm */
+.attachments {
+	padding: 10px 0;
+	border-radius: 8px;
+	margin-bottom: 16px;
+}
+
+.attachments h3 {
+	font-size: 16px;
+	font-weight: 600;
+	margin: 0 0 10px 0;
+}
+
+.attachments video {
+	width: 100%;
+	border-radius: 6px;
+}
+
+/* 🔢 Danh sách các bước */
+.steps {
+	margin-top: 20px;
+}
+
+.steps h3 {
+	font-size: 17px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+/* 🎯 Danh sách có số thứ tự */
+.steps ol {
+	list-style: none;
+	padding-left: 0;
+	counter-reset: step-counter;
+}
+
+.steps li {
+	background: white;
+	margin: 6px 0;
+	padding: 10px 14px;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	font-size: 15px;
+	font-weight: 500;
+	border-left: 4px solid #027f77;
+}
+
+.steps li:hover {
+	background: #e0f2f1;
+}
+
+/* 🔢 Chỉ số bước */
+.steps li::before {
+	content: counter(step-counter);
+	counter-increment: step-counter;
+	font-weight: bold;
+	background: #027f77;
+	color: white;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	margin-right: 10px;
+	font-size: 14px;
+}
+
+/* ✅ Kết quả */
+.results,
+.comments {
+	margin-top: 18px;
+	border-radius: 8px;
+}
+
+.results h3,
+.comments h3 {
+	font-size: 17px;
+	font-weight: 600;
+}
+.actual-result {
+	background: white; /* Hồng nhạt - lỗi */
+	padding: 12px;
+	border-radius: 6px;
+	margin-bottom: 10px;
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.expected-result {
+	background: white; /* Xanh nhạt - mong muốn */
+	padding: 12px;
+	border-radius: 6px;
+	font-weight: 600;
+	font-size: 15px;
+}
+
+/* Comment */
+/* Comment Section */
+.comment-section {
+	border-radius: 8px;
+	margin: 0 auto;
+}
+
+/* Header */
+.comment-header {
+	display: flex;
+	gap: 20px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+}
+
+.active-tab {
+	color: #027f77;
+	border-bottom: 2px solid #027f77;
+	padding-bottom: 5px;
+}
+
+.inactive-tab {
+	color: #666;
+	cursor: pointer;
+}
+
+.inactive-tab:hover {
+	color: #027f77;
+}
+
+/* Input Comment Box */
+.comment-box {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background: #fff;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	margin-bottom: 12px;
+}
+
+.comment-box input {
+	font-family: "DM Sans", sans-serif;
+	flex: 1;
+	border: none;
+	outline: none;
+	font-size: 14px;
+	padding: 6px;
+}
+
+.send-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.send-button img {
+	width: 20px;
+	height: 20px;
+}
+
+/* Comment */
+.comment {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 10px;
+	background: #fff;
+	border-radius: 6px;
+	border: 1px solid #ddd;
+	margin-bottom: 8px;
+}
+
+.comment-avatar img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.comment-content {
+	flex: 1;
+	font-size: 14px;
+	color: #333;
+}
+
+.comment-content p {
+	margin: 5px 0;
+}
+
+.comment-time {
+	font-size: 12px;
+	color: #777;
+}
+
+/* Comment */
+
+.bug-report {
+	padding: 20px;
+	width: 300px;
+}
+
+.section {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+p {
+	margin: 15px 0;
+}
+
+.label {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.status {
+	font-weight: bold;
+}
+
+.rejected {
+	color: red;
+}
+
+.icon {
+	display: flex;
+	align-items: center;
+}
+
+.icon-severity {
+	display: flex;
+	align-items: center;
+}
+.tester {
+	display: flex;
+	align-items: center;
+}
+.tester-info {
+	display: flex;
+	align-items: center;
+}
+
+.tester-info img {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	margin-right: 5px;
+}
+
+.device-info {
+	display: flex;
+	font-size: 12px !important;
+	align-items: center;
+	margin-bottom: 5px;
+}
+
+.device-info img {
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+}

@@ -13,45 +13,28 @@
 	background: white;
 	font-size: 12px;
 }
+
 .listbug-ctn th,
 td {
-	padding: 10px;
+	padding: 12px;
+	border: 1px solid #ddd;
 	text-align: left;
-}
-.listbug-ctn .status-rejected {
-	color: red;
-	font-weight: bold;
-}
-.listbug-ctn .feature {
-	color: #007bff;
-}
-.listbug-ctn .new-label {
-	color: #00aaff;
-	font-weight: bold;
-}
-.listbug-ctn .icon {
-	width: 20px;
-	height: 20px;
-}
-
-.listbug-ctn tr:nth-child(even) {
-	background-color: #f1f1f1; /* Áp dụng cho hàng chẵn */
-}
-.listbug-ctn td:first-child {
-	max-width: 400px;
 }
 
 .listbug-ctn td:last-child {
 	display: flex;
-	gap: 5px;
+	gap: 10px;
 	align-items: center;
 }
 
-.listbug-ctn td:first-child {
-	color: #236a84;
+.listbug-ctn th {
+	background-color: #f4f4f4 !important;
+	font-weight: bold;
 }
-.listbug-ctn tr {
-	border: 1px solid #ddd;
+
+.listbug-ctn td:nth-child(11) {
+	text-align: center;
+	font-weight: bold;
 }
 
 .listbug-ctn td img {
@@ -60,4 +43,9 @@ td {
 	border-radius: 50%;
 	border: 2px solid white;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.new-label {
+	color: rgb(25, 144, 236);
+	font-weight: 600;
 }

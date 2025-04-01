@@ -1,9 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 import classname from "classnames/bind";
 
 const cx = classname.bind(styles);
 
 function Sidebar() {
+	const navigate = useNavigate();
+	const handleSignout = () => {
+		localStorage.removeItem("access_token");
+		localStorage.removeItem("user");
+		navigate("/login");
+	};
 	return (
 		<div className={cx("sidebar-ctn")}>
 			<div className={cx("sidebar-divider")}>
@@ -29,6 +36,10 @@ function Sidebar() {
 					<div className={cx("sidebar-header-right")}>
 						<img src="/icons/i-chevron-left.svg"></img>
 						{/* <img src="/icons/i-chevron-right.svg"></img> */}
+					</div>
+					<div className={cx("user-popup")}>
+						<span onClick={handleSignout}>Sign out</span>
+						<span>Setting</span>
 					</div>
 				</div>
 			</div>

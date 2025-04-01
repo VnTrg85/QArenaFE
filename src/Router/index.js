@@ -2,13 +2,15 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 //Pages
-import Login from "../Page/Login/Login";
-import Home from "../Page/Home/Home";
-import AuthMiddleware from "./AuthMiddleware/AuthMiddleware";
-import ProjectDetail from "../Page/ProjectDetail/ProjectDetail";
-import Academy from "../Page/Academy/Academy";
+import Login from "../Pages/Login/Login";
+import Home from "../Tester/Page/Home/Home";
+import HomeCustomer from "../Customer/Pages/HomeCustomer/HomeCustomer";
 
-const validRoutes = ["", "project/:id", "ranking"];
+import AuthMiddleware from "./AuthMiddleware/AuthMiddleware";
+import ProjectDetail from "../Tester/Page/ProjectDetail/ProjectDetail";
+import Academy from "../Tester/Page/Academy/Academy";
+
+const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
 		path: "/login",
@@ -16,15 +18,15 @@ const router = createBrowserRouter([
 		element: <Login></Login>,
 	},
 	{
-		path: "/",
+		path: "/dGVzdGVy",
 		element: <AuthMiddleware validRoutes={validRoutes} />,
 		children: [
 			{
-				path: "/",
+				path: "",
 				element: <Home />,
 			},
 			{
-				name: "project-detai;",
+				name: "project-detail",
 				path: "project/:id",
 				element: <ProjectDetail />,
 			},
@@ -59,6 +61,16 @@ const router = createBrowserRouter([
 			{
 				path: "academy",
 				element: <Academy />,
+			},
+		],
+	},
+	{
+		path: "/Q3VzdG9tZXI=",
+		element: <AuthMiddleware validRoutes={validRoutes} />,
+		children: [
+			{
+				path: "",
+				element: <HomeCustomer />,
 			},
 		],
 	},

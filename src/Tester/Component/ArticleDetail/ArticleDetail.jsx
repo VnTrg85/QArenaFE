@@ -73,14 +73,16 @@ function ArticleDetail() {
 								<tbody>
 									<tr>
 										<td>
-											<img src="/icons/i-low.svg" alt="Low" /> Low
+											<img src="/icons/i-low.svg" alt="Low" />
+											<span>Low</span>
 										</td>
 										<td>$2.50</td>
 										<td>$0.25</td>
 									</tr>
 									<tr>
 										<td>
-											<img src="/icons/i-high.svg" alt="High" /> High
+											<img src="/icons/i-high.svg" alt="High" />
+											<span>High</span>
 										</td>
 										<td>$4.90</td>
 										<td>$0.49</td>
@@ -185,41 +187,69 @@ function ArticleDetail() {
 				</div>
 			</div>
 			{location.pathname.includes("project") && (
-				<div className={cx("details")}>
-					<div className={cx("box")}>
-						<h2>Payout</h2>
-						<table>
-							<thead>
-								<tr>
-									<th>Bug Type</th>
-									<th>Amount</th>
-									<th>Reprod.</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>
-										<img src="/icons/i-low.svg" alt="Low" /> Low
-									</td>
-									<td>$2.50</td>
-									<td>$0.25</td>
-								</tr>
-								<tr>
-									<td>
-										<img src="/icons/i-high.svg" alt="High" /> High
-									</td>
-									<td>$4.90</td>
-									<td>$0.49</td>
-								</tr>
-								<tr>
-									<td>
-										<img src="/icons/i-critical.svg" alt="Critical" /> Critical
-									</td>
-									<td>$7.30</td>
-									<td>$0.60</td>
-								</tr>
-							</tbody>
-						</table>
+				<div className={cx("container-right")}>
+					<div className={cx("details")}>
+						<div className={cx("box")}>
+							<h2>Payout</h2>
+							<table>
+								<thead>
+									<tr>
+										<th>Bug Type</th>
+										<th>Amount</th>
+										<th>Reprod.</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<img src="/icons/i-low.svg" alt="Low" /> Low
+										</td>
+										<td>$2.50</td>
+										<td>$0.25</td>
+									</tr>
+									<tr>
+										<td>
+											<img src="/icons/i-high.svg" alt="High" /> High
+										</td>
+										<td>$4.90</td>
+										<td>$0.49</td>
+									</tr>
+									<tr>
+										<td>
+											<img src="/icons/i-critical.svg" alt="Critical" /> Critical
+										</td>
+										<td>$7.30</td>
+										<td>$0.60</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div className={cx("device-ctn")}>
+						<h5>Requested OS</h5>
+						<div className={cx("device-item")}>
+							<img src="/icons/i-computer.svg"></img>
+							<div className={cx("device-item-content")}>
+								<span>Window 11 and higher</span>
+								<div>
+									<img src="/icons/i-edge.svg"></img>
+									<img src="/icons/i-edge.svg"></img>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className={cx("device-ctn")}>
+						<h5>Available for reproduction</h5>
+						<div className={cx("device-item")}>
+							<img src="/icons/i-mac.svg"></img>
+							<div className={cx("device-item-content")}>
+								<span>Window 11 and higher</span>
+								<div>
+									<img src="/icons/i-chrome.svg"></img>
+									<img src="/icons/i-safari.svg"></img>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			)}

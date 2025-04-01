@@ -185,8 +185,6 @@ td {
 	padding: 10px 15px;
 }
 .wrapper-container td:first-child {
-	display: flex;
-	gap: 10px;
 }
 .wrapper-container th {
 	background: linear-gradient(135deg, #8e44ad, #3498db);
@@ -204,7 +202,6 @@ td {
 }
 
 .wrapper-container td {
-	border-bottom: 1px solid #ddd;
 	color: #333;
 }
 
@@ -235,9 +232,46 @@ td {
 	cursor: pointer;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
-
 	text-decoration: none;
 }
 .button:hover {
 	background-color: #1d3e57;
+}
+
+.container-right {
+	border-left: 1px solid #ccc;
+	padding: 0 10px;
+}
+.device-ctn h5 {
+	font-weight: 600;
+	font-size: 15px;
+	margin: 20px 0 5px 0;
+}
+
+.device-item {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 0px 10px;
+	border-radius: 5px;
+}
+
+.device-item img {
+	width: 50px;
+	height: 50px;
+}
+
+.device-item-content {
+	display: flex;
+	gap: 5px;
+	flex-direction: column;
+}
+.device-item-content img {
+	width: 20px !important;
+	height: 20px !important;
+}
+
+.device-item-content div {
+	display: flex;
+	gap: 10px;
 }
