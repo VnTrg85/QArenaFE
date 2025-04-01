@@ -1,5 +1,5 @@
 function HomeCustomer() {
-	return <div>HomeCustomer</div>;
+	return <div>HomeCustomer Hello</div>;
 }
 
 export default HomeCustomer;
