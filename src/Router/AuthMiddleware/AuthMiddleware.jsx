@@ -76,7 +76,6 @@ const AuthMiddleware = ({ validRoutes }) => {
 	// 1. Nếu có token và route hợp lệ -> render nội dung
 	if (isAuth && isValidRoute(currentPath, validRoutes)) {
 		if (getUserValue().role == "3" && currentPath.includes("dGVzdGVy")) {
-			console.log(2222);
 			return (
 				<DefaultLayout>
 					<Outlet />
@@ -84,7 +83,6 @@ const AuthMiddleware = ({ validRoutes }) => {
 				</DefaultLayout>
 			);
 		} else if (getUserValue().role == "2" && currentPath.includes("Q3VzdG9tZXI=")) {
-			console.log(1111);
 			return <Outlet></Outlet>;
 		}
 	}
