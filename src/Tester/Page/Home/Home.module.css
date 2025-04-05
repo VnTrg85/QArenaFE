@@ -89,6 +89,7 @@ p {
 	width: 97%;
 	height: 100%;
 	display: flex;
+	position: relative;
 }
 
 .home-container-content-left {
@@ -98,11 +99,39 @@ p {
 	border-right: 1px solid #eaeaea;
 	padding: 20px;
 	width: 400px;
-	height: calc(100vh - 240px);
+	height: calc(100vh - 270px);
 	overflow: auto;
+	margin-top: 35px;
+}
+.home-container-content .navbar {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	z-index: 100;
+	left: 20px;
+	color: #2b1919;
+	border-bottom: 1px solid #ccc;
+	background: white;
+	width: 97%;
+}
+
+.navbar-item {
+	display: flex;
+	justify-content: center;
+	padding: 8px 50px;
+	font-size: 15px;
 }
 .home-container-content-right {
+	margin-top: 20px;
 	flex: 1;
 	height: calc(100vh - 230px);
 	overflow: auto;
+}
+
+.active {
+	font-size: 15px;
+	font-weight: 600;
+	color: #027f77;
+	background-color: #f3fcfb;
+	border-bottom: 3px solid #027f77;
 }

@@ -5,6 +5,8 @@ import styles from "./AuthMiddleware.module.css";
 import classname from "classnames/bind";
 import { verify_token } from "../../Services/AuthService";
 import { useUser } from "../../Context/AuthContext";
+import { get_user_by_email } from "../../Services/UserService";
+import useToast from "../../CustomHook/useToast";
 const cx = classname.bind(styles);
 
 const isValidRoute = (path, validRoutes) => {
@@ -18,25 +20,39 @@ const isValidRoute = (path, validRoutes) => {
 };
 
 const AuthMiddleware = ({ validRoutes }) => {
+	const { showToast, ToastComponent } = useToast();
 	const location = useLocation();
 	const currentPath = location.pathname.replace("/", ""); // Lấy route hiện tại
 	const [isAuth, setIsAuth] = useState(null);
+	const { getUserValue, setUserValue } = useUser();
 
 	const validateTokenAPI = async (token, email) => {
 		try {
 			const response = await verify_token(token, email);
-			if (response.status == "success") return true;
-			else return false;
+			if (response.status == "success") {
+				return true;
+			} else return false;
 		} catch (error) {
 			console.error("Token validation failed:", error);
 			return false;
+		}
+	};
+	const callApiGetUser = async () => {
+		const res = await get_user_by_email(getUserValue().email);
+		if (res.status == "success") {
+			setUserValue(res.data);
+		} else {
+			showToast({
+				message: "Error happen when get user information",
+				type: "error",
+			});
 		}
 	};
 
 	useEffect(() => {
 		const checkAuth = async () => {
 			const token = localStorage.getItem("access_token");
-			const user = localStorage.getItem("user");
+			const user = getUserValue().email;
 			if (!token) {
 				setIsAuth(false);
 				return;
@@ -45,6 +61,8 @@ const AuthMiddleware = ({ validRoutes }) => {
 			const isValid = await validateTokenAPI(token, user);
 			if (!isValid) {
 				// localStorage.removeItem("access_token");
+			} else {
+				await callApiGetUser(user);
 			}
 			setIsAuth(isValid);
 		};
@@ -54,16 +72,19 @@ const AuthMiddleware = ({ validRoutes }) => {
 	if (isAuth === null) {
 		return <div>Loading...</div>;
 	}
+
 	// 1. Nếu có token và route hợp lệ -> render nội dung
 	if (isAuth && isValidRoute(currentPath, validRoutes)) {
-		console.log(currentPath);
-		if (localStorage.getItem("role") == "tester" && currentPath.includes("dGVzdGVy")) {
+		if (getUserValue().role == "3" && currentPath.includes("dGVzdGVy")) {
+			console.log(2222);
 			return (
 				<DefaultLayout>
 					<Outlet />
+					<ToastComponent></ToastComponent>
 				</DefaultLayout>
 			);
-		} else if (localStorage.getItem("role") == "customer" && currentPath.includes("Q3VzdG9tZXI=")) {
+		} else if (getUserValue().role == "2" && currentPath.includes("Q3VzdG9tZXI=")) {
+			console.log(1111);
 			return <Outlet></Outlet>;
 		}
 	}

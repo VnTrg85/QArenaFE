@@ -5,11 +5,12 @@ import { login, signup } from "../../Services/AuthService";
 import { useUser } from "../../Context/AuthContext";
 import { Router, useNavigate } from "react-router-dom";
 import { verify_token } from "../../Services/AuthService";
-
+import useToast from "../../CustomHook/useToast";
 const cx = classname.bind(styles);
 
 const Login = () => {
 	const navigate = useNavigate();
+	const { showToast, ToastComponent } = useToast();
 	//State
 	const { setUserValue, getUserValue } = useUser();
 	const [data, setData] = useState({
@@ -17,6 +18,7 @@ const Login = () => {
 		password: "",
 		repeat_password: "",
 		role: "",
+		create_at: "",
 	});
 	const isFirstRender = useRef({
 		email: true,
@@ -38,6 +40,7 @@ const Login = () => {
 		term_checked: false,
 		role: false,
 	});
+	//Method
 
 	const validateTokenAPI = async (token, email) => {
 		try {
@@ -53,8 +56,8 @@ const Login = () => {
 	useEffect(() => {
 		const checkAuth = async () => {
 			const token = localStorage.getItem("access_token");
-			const user = localStorage.getItem("user");
-			const role = localStorage.getItem("role");
+			const user = getUserValue().email;
+			const role = getUserValue().role;
 			if (!token) {
 				return;
 			}
@@ -216,22 +219,44 @@ const Login = () => {
 		const res = await signup(data);
 		if (res.status == "success") {
 			setIsLogin(true);
+			showToast({
+				message: "Sign up successfully",
+				type: "success",
+			});
 		} else {
+			showToast({
+				message: res.data || "Some thing went wrong",
+				type: res.status || "error",
+			});
 		}
 	};
 
 	const handleSignin = async () => {
 		const res = await login({ email: data.email, password: data.password });
 		if (res.status == "success") {
-			console.log(res.data.token);
+			showToast({
+				message: "Login successfully",
+				type: res.status,
+			});
 			localStorage.setItem("access_token", res.data.token);
-			localStorage.setItem("user", res.data.email);
-			localStorage.setItem("role", res.data.role);
-			setUserValue({ email: res.data.email });
-			console.log(getUserValue());
+			localStorage.setItem(
+				"user",
+				JSON.stringify({
+					email: res.data.email,
+					role: res.data.role,
+				}),
+			);
+			setUserValue({ email: res.data.email, role: res.data.role });
+			showToast({
+				message: "Login successfully",
+				type: "success",
+			});
 			navigate("/dGVzdGVy");
 		} else {
-			// console.log(res.data);
+			showToast({
+				message: res.data || "Some thing went wrong",
+				type: res.status || "error",
+			});
 		}
 	};
 
@@ -414,6 +439,7 @@ const Login = () => {
 					</div>
 				</div>
 			)}
+			<ToastComponent></ToastComponent>
 		</div>
 	);
 };

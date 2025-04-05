@@ -1,14 +1,13 @@
 .task-card {
 	display: flex;
 	align-items: center;
-	background: #f9f9f9;
 	border-radius: 10px;
 	width: 600px;
 	padding: 15px;
 	position: relative;
 	font-family: "DM Sans", sans-serif;
 	max-width: 380px;
-	background: #f9f9f9;
+	background: #f1ebeb;
 }
 
 .active {

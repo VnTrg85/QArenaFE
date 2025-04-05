@@ -2,8 +2,11 @@ import styles from "./Home.module.css";
 import classname from "classnames/bind";
 import ArticleItem from "../../Component/HomeComps/ArticleItem/ArticleItem";
 import ArticleDetail from "../../Component/ArticleDetail/ArticleDetail";
+import { useUser } from "../../../Context/AuthContext";
 const cx = classname.bind(styles);
 function Home() {
+	const { getUserValue } = useUser();
+	console.log(getUserValue());
 	return (
 		<div className={cx("home-container")}>
 			<div className={cx("home-container-label")}>
@@ -24,6 +27,11 @@ function Home() {
 				</div>
 			</div>
 			<div className={cx("home-container-content")}>
+				<div className={cx("navbar")}>
+					<div className={cx("navbar-item", "active")}>Opening</div>
+					<div className={cx("navbar-item")}>Doing</div>
+					<div className={cx("navbar-item")}>Done</div>
+				</div>
 				<div className={cx("home-container-content-left")}>
 					<ArticleItem active="true"></ArticleItem>
 					<ArticleItem></ArticleItem>
