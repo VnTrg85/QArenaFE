@@ -1,0 +1,291 @@
+.create-bug-ctn {
+	font-family: "DM Sans", sans-serif;
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 65px;
+	gap: 10px;
+}
+
+.container-left {
+	flex: 1;
+	background-color: #ffffff;
+	padding: 10px 20px 0 20px;
+	border-radius: 12px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+	border: 1px solid #e2e8f0;
+}
+
+.container-left-header {
+	font-size: 20px;
+	font-weight: 600;
+	position: relative;
+	margin-bottom: 20px;
+}
+.container-left-header:after {
+	font-size: 30px;
+	content: "";
+	display: block;
+	width: 84%;
+	top: 20px;
+	left: 140px;
+	position: absolute;
+	border-bottom: 1px solid #ccc;
+	height: 1px;
+}
+
+.form-group {
+	margin-bottom: 25px;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.form-group-second {
+	margin-bottom: 25px;
+}
+
+.create-bug-ctn label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 8px;
+	color: black;
+	font-size: 14px;
+	letter-spacing: 0.2px;
+	min-width: 150px;
+}
+
+select,
+input[type="text"],
+textarea {
+	width: 100%;
+	padding: 12px 15px;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	box-sizing: border-box;
+	font-size: 14px;
+	transition: all 0.2s ease;
+	background-color: #f7fafc;
+	font-family: "DM Sans", sans-serif;
+	color: black; /* Màu chữ trong input/textarea */
+}
+
+select {
+	background-color: #027f77; /* Nền select nhạt hơn màu chính */
+	color: white;
+	cursor: pointer;
+	font-family: "DM Sans", sans-serif;
+	width: 100%;
+	padding: 10px 40px 10px 10px; /* space for icon */
+	font-size: 14px;
+	appearance: none; /* hide default arrow */
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border: 1px solid #ccc;
+	background-image: url("/public/icons/i-chevron-down.svg"); /* your custom icon */
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 16px 16px;
+	cursor: pointer;
+}
+
+.severity-buttons {
+	display: flex;
+	gap: 12px;
+}
+
+.severity-buttons button {
+	padding: 10px 20px;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	background-color: #e6f7f6;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	color: #027f77;
+	transition: all 0.2s ease;
+}
+
+.severity-buttons button:hover {
+	background-color: #d1efed;
+	border-color: #b7e3e0;
+}
+
+.severity-buttons button.active {
+	background-color: #027f77;
+	color: #fff;
+	border-color: #027f77;
+	box-shadow: 0 2px 8px rgba(2, 127, 119, 0.2);
+}
+
+.create-bug-ctn .step {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	margin-bottom: 15px;
+}
+
+.create-bug-ctn .step-number {
+	width: 35px;
+	height: 30px;
+	background-color: #027f77; /* Màu step number */
+	color: #fff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 14px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-bug-ctn .step .icon-ctn {
+	padding: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #e6f7f6;
+	border: 1px solid #e2e8f0;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	color: #027f77;
+}
+
+.create-bug-ctn .step img {
+	width: 16px;
+	height: 16px;
+}
+
+.create-bug-ctn .step button:hover {
+	background-color: #d1efed;
+}
+
+.create-bug-ctn .add-step,
+.create-bug-ctn .add-attachment {
+	display: inline-flex;
+	align-items: center;
+	padding: 10px 20px;
+	background-color: #e6f7f6;
+	color: #027f77;
+	border: 1px solid #b7e3e0;
+	border-radius: 8px;
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 14px;
+	transition: all 0.2s ease;
+}
+
+.create-bug-ctn .add-step:hover,
+.create-bug-ctn .add-attachment:hover {
+	background-color: #b7e3e0;
+	border-color: #8ed6d2;
+	color: #015f58;
+}
+
+.create-bug-ctn .preview {
+	display: inline-flex;
+	align-items: center;
+	padding: 10px 20px;
+	background-color: #e6f7f6;
+	color: #027f77;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 14px;
+	float: right;
+	transition: all 0.2s ease;
+}
+
+.create-bug-ctn .preview:hover {
+	background-color: #d1efed;
+	border-color: #b7e3e0;
+}
+
+.create-bug-ctn .browsers {
+	display: flex;
+	gap: 15px;
+	margin-top: 10px;
+}
+
+.create-bug-ctn .browsers img {
+	width: 32px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid #e2e8f0;
+	padding: 4px;
+	background-color: #fff;
+}
+
+.create-bug-ctn .browsers img:hover {
+	transform: scale(1.1);
+	transition: transform 0.2s ease;
+}
+
+.create-bug-ctn .create-bug-ctn p {
+	margin: 10px 0 0;
+	color: #4a908b; /* Màu phụ nhạt hơn màu chính */
+	font-size: 14px;
+}
+.browser-ctn p {
+	margin: 0;
+}
+
+.browser-ctn img {
+	cursor: pointer;
+}
+
+.create-bug-ctn .container-right {
+	width: 300px;
+	background-color: #ffffff;
+	max-width: 300px;
+	padding: 0 0 0 20px;
+	color: #222;
+	line-height: 1.7;
+	transition: all 0.3s ease;
+	border-left: 5px solid #027f77;
+}
+
+.create-bug-ctn .collapse-ctn {
+	display: flex;
+	width: 100%;
+	justify-content: right;
+	gap: 10px;
+}
+.create-bug-ctn .container-right img {
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+.create-bug-ctn .container-right img:hover {
+	scale: 1.1;
+}
+
+.create-bug-ctn .container-right .content-ctn {
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.create-bug-ctn .container-right label {
+	font-weight: 600;
+	color: #555;
+	font-size: 15px;
+	margin-bottom: 6px;
+}
+
+.create-bug-ctn .container-right .feature-value {
+	background-color: #f1f5f9;
+	padding: 10px 14px;
+	border-radius: 10px;
+	color: #1e293b;
+	font-size: 14px;
+	font-weight: 500;
+	white-space: pre-line;
+}
+.is-collapse {
+	width: 10px !important;
+}

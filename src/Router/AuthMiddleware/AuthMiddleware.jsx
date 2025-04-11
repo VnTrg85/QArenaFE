@@ -70,7 +70,11 @@ const AuthMiddleware = ({ validRoutes }) => {
 		checkAuth();
 	}, []);
 	if (isAuth === null) {
-		return <div>Loading...</div>;
+		return (
+			<div className={cx("loading")}>
+				<img src="/icons/i-loading.svg"></img>
+			</div>
+		);
 	}
 
 	// 1. Nếu có token và route hợp lệ -> render nội dung

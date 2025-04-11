@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styles from "./ListBug.module.css";
 import classname from "classnames/bind";
-import BugDetail from "../../BugDetail/BugDetail";
+import BugDetail from "../../../Component/BugDetail/BugDetail";
 
 const cx = classname.bind(styles);
 
 function ListBug() {
-	const [isOpenBugDetail, setIsOpenBugDetail] = useState(false);
+	const [isOpenBugDetail, setIsOpenBugDetail] = useState(true);
 	return (
 		<div className={cx("listbug-ctn")}>
 			{!isOpenBugDetail && (

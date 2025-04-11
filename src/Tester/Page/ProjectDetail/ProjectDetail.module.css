@@ -39,3 +39,52 @@
 	height: calc(100vh - 140px);
 	overflow: auto;
 }
+
+.project-footer {
+	width: 100%;
+	background-color: #027f77;
+	position: fixed;
+	bottom: 0;
+	left: 250px;
+	border-left: 1px solid #ccc;
+	height: 55px;
+	display: flex;
+	align-items: center;
+}
+
+.project-footer span {
+	padding: 10px 20px;
+	background: white;
+	border-radius: 5px;
+	color: #027f77;
+	font-size: 15px;
+	margin-left: 15px;
+	cursor: pointer;
+}
+
+.project-footer span:hover {
+	background: #12605a;
+	color: white;
+}
+
+.project-footer p {
+	margin: 0;
+	margin-left: 20px;
+	color: white;
+}
+
+.btn-submit {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	background: #027f77 !important;
+	color: white !important;
+	border: 1px solid #fff;
+}
+.btn-submit img {
+	width: 20px;
+	height: 20px;
+}
+.btn-submit:hover {
+	background: #12605a !important;
+}
