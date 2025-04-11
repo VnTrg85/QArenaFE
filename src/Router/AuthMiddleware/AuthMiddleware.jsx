@@ -53,6 +53,7 @@ const AuthMiddleware = ({ validRoutes }) => {
 		const checkAuth = async () => {
 			const token = localStorage.getItem("access_token");
 			const user = getUserValue().email;
+			console.log(getUserValue());
 			if (!token) {
 				setIsAuth(false);
 				return;

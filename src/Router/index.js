@@ -4,13 +4,11 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 //Pages
 import Login from "../Pages/Login/Login";
 import Home from "../Tester/Page/Home/Home";
-import HomeCustomer from "../Customer/Pages/HomeCustomer/HomeCustomer";
-
+import Dashboard from "../Customer/Page/Dashboard/Dashboard";
+import ProjectPage from "../Customer/Page/Project/ProjectPage";
 import AuthMiddleware from "./AuthMiddleware/AuthMiddleware";
 import ProjectDetail from "../Tester/Page/ProjectDetail/ProjectDetail";
 import Academy from "../Tester/Page/Academy/Academy";
-import Dashboard from "../Page/Dashboard/Dashboard";
-import ProjectPage from "../Page/Project/ProjectPage";
 import ArticleDetail from "../Tester/Component/ArticleDetail/ArticleDetail";
 import ListBug from "../Tester/Page/ProjectDetail/ListBug/ListBug";
 import Chat from "../Tester/Page/ProjectDetail/Chat/Chat";
@@ -105,14 +103,6 @@ const router = createBrowserRouter([
 				path: "academy",
 				element: <Academy />,
 			},
-			{
-				path: "dashboard",
-				element: <Dashboard />,
-			},
-			{
-				path: "project",
-				element: <ProjectPage />,
-			},
 		],
 	},
 	{
@@ -121,7 +111,13 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "",
-				element: <HomeCustomer />,
+				element: <Dashboard />,
+				children: [
+					{
+						path: "project",
+						element: <ProjectPage />,
+					},
+				],
 			},
 		],
 	},
