@@ -1,0 +1,14 @@
+.dashboard-layout {
+    display: flex;
+    height: 100vh;
+    background: #f3f4f8;
+    margin-top: 50px;
+    width: 100%;
+  }
+  
+  .main-view {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  

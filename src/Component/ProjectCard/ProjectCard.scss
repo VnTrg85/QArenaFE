@@ -1,0 +1,20 @@
+.project-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  }
+  .project-card h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  .project-card p {
+    margin: 5px 0;
+  }
+  

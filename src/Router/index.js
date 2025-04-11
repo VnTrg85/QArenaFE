@@ -7,6 +7,8 @@ import Home from "../Page/Home/Home";
 import AuthMiddleware from "./AuthMiddleware/AuthMiddleware";
 import ProjectDetail from "../Page/ProjectDetail/ProjectDetail";
 import Academy from "../Page/Academy/Academy";
+import Dashboard from "../Page/Dashboard/Dashboard";
+import ProjectPage from "../Page/Project/ProjectPage";
 
 const validRoutes = ["", "project/:id", "ranking"];
 const router = createBrowserRouter([
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
 			{
 				path: "academy",
 				element: <Academy />,
+			},
+			{
+				path: "dashboard",
+				element: <Dashboard/>,
+			},
+			{
+				path: "project",
+				element: <ProjectPage/>,
 			},
 		],
 	},
