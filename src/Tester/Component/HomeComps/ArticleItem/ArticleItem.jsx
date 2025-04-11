@@ -1,20 +1,36 @@
 import styles from "./ArticleItem.module.css";
 import classname from "classnames/bind";
-
+import { formatDate, formatMonth } from "../../../../Utils/formatTime";
 const cx = classname.bind(styles);
 
-function ArticleItem({ active }) {
+function ArticleItem({ project, active }) {
+	const getMaxPayout = () => {
+		if (project.testProject.payoutBugs.length == 0) return 0;
+		const max = project.testProject.payoutBugs.reduce((acc, item) => {
+			return acc > item.amount ? acc : item.amount;
+		}, project.testProject.payoutBugs[0].amount);
+		return max;
+	};
+	const getMinPayout = () => {
+		if (project.testProject.payoutBugs.length == 0) return 0;
+		const min = project.testProject.payoutBugs.reduce((acc, item) => {
+			return acc < item.amount ? acc : item.amount;
+		}, project.testProject.payoutBugs[0].amount);
+		return min;
+	};
 	return (
 		<div>
 			<div class={cx("task-card", active ? "active" : "")}>
 				<div class={active ? cx("task-status") : ""}></div>
 				<div class={cx("task-content")}>
 					<div class={cx("task-header")}>
-						<h3>Verification of documents and photos in the government of GRESCSS</h3>
-						<p>Myanmar Kyeeonkyeewa Solar Power Plant Project</p>
+						<h3>{project.testProject.projectName}</h3>
+						<p>{project.testProject.description.slice(0, 200)}...</p>
 					</div>
 					<div class={cx("task-info")}>
-						<span class={cx("badge")}>Active</span>
+						{project.status == "Opening" && <span class={cx("badge-active")}>Available</span>}
+						{project.status == "Doing" && <span class={cx("badge-progress")}>In progress</span>}
+						{project.status == "Done" && <span class={cx("badge-terminated")}>Terminated</span>}
 					</div>
 					<div class={cx("task-footer")}>
 						<div class={cx("avatars")}>
@@ -38,13 +54,13 @@ function ArticleItem({ active }) {
 				</div>
 				<div class={cx("task-right-ctn")}>
 					<div class={cx("task-date")}>
-						<span>SUN</span>
-						<strong>18</strong>
+						<span>{formatMonth(project.testProject.end_At)}</span>
+						<strong>{formatDate(project.testProject.end_At)}</strong>
 					</div>
 					<div class={cx("icons")}>
-						<span class={cx("icon")}>10$</span>
+						<span class={cx("icon")}>{getMinPayout()}$</span>
 						<span class={cx("icon")}>-</span>
-						<span class={cx("icon")}>20$</span>
+						<span class={cx("icon")}>{getMaxPayout()}$</span>
 					</div>
 				</div>
 			</div>

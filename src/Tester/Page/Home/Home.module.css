@@ -118,8 +118,10 @@ p {
 .navbar-item {
 	display: flex;
 	justify-content: center;
-	padding: 8px 50px;
+	padding: 8px 40px;
 	font-size: 15px;
+	cursor: pointer;
+	width: 60px;
 }
 .home-container-content-right {
 	margin-top: 20px;

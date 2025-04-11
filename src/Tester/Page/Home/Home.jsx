@@ -3,10 +3,49 @@ import classname from "classnames/bind";
 import ArticleItem from "../../Component/HomeComps/ArticleItem/ArticleItem";
 import ArticleDetail from "../../Component/ArticleDetail/ArticleDetail";
 import { useUser } from "../../../Context/AuthContext";
+import { useEffect, useMemo, useState } from "react";
+import { get_test_projects } from "../../Service/TestProject";
 const cx = classname.bind(styles);
 function Home() {
+	//HOOKS
 	const { getUserValue } = useUser();
-	console.log(getUserValue());
+
+	//STATE
+	const [testProjects, setTestProjects] = useState([]);
+	const [tabActive, setTabActive] = useState("OPENING");
+	const [selectedArticle, setSelectedArticle] = useState(null);
+	//SIDE EFFECT
+	useEffect(() => {
+		async function fetchData() {
+			const res = await get_test_projects(getUserValue().id);
+			if (res.status == "success") {
+				setTestProjects(res.data);
+			}
+		}
+		fetchData();
+	}, []);
+	const listTestProjects = useMemo(() => {
+		let list = [];
+		if (tabActive == "OPENING") {
+			list = testProjects.filter(item => item.status == "Opening");
+		} else if (tabActive == "DONE") {
+			list = testProjects.filter(item => item.status == "Done");
+		} else if (tabActive == "DOING") {
+			list = testProjects.filter(item => item.status == "Doing");
+		}
+		setSelectedArticle(list[0]);
+		return list;
+	}, [tabActive, testProjects]);
+	//METHODS
+
+	const handleChangeActiveTab = tab => {
+		setTabActive(tab);
+	};
+
+	const handleClickOnArticle = item => {
+		setSelectedArticle(item);
+	};
+
 	return (
 		<div className={cx("home-container")}>
 			<div className={cx("home-container-label")}>
@@ -28,20 +67,49 @@ function Home() {
 			</div>
 			<div className={cx("home-container-content")}>
 				<div className={cx("navbar")}>
-					<div className={cx("navbar-item", "active")}>Opening</div>
-					<div className={cx("navbar-item")}>Doing</div>
-					<div className={cx("navbar-item")}>Done</div>
+					<div
+						onClick={() => {
+							handleChangeActiveTab("OPENING");
+						}}
+						className={cx("navbar-item", tabActive == "OPENING" ? "active" : "")}
+					>
+						Opening
+					</div>
+					<div
+						onClick={() => {
+							handleChangeActiveTab("DOING");
+						}}
+						className={cx("navbar-item", tabActive == "DOING" ? "active" : "")}
+					>
+						Doing
+					</div>
+					<div
+						onClick={() => {
+							handleChangeActiveTab("DONE");
+						}}
+						className={cx("navbar-item", tabActive == "DONE" ? "active" : "")}
+					>
+						Done
+					</div>
 				</div>
 				<div className={cx("home-container-content-left")}>
-					<ArticleItem active="true"></ArticleItem>
+					{listTestProjects.map(item => (
+						<ArticleItem
+							key={item.id}
+							project={item}
+							active={selectedArticle?.id == item.id ? true : false}
+							onClick={() => handleClickOnArticle(item)}
+						></ArticleItem>
+					))}
+					{/* <ArticleItem active="true"></ArticleItem>
 					<ArticleItem></ArticleItem>
 					<ArticleItem></ArticleItem>
 					<ArticleItem></ArticleItem>
 					<ArticleItem></ArticleItem>
-					<ArticleItem></ArticleItem>
+					<ArticleItem></ArticleItem> */}
 				</div>
 				<div className={cx("home-container-content-right")}>
-					<ArticleDetail></ArticleDetail>
+					<ArticleDetail project={selectedArticle?.testProject}></ArticleDetail>
 				</div>
 			</div>
 		</div>

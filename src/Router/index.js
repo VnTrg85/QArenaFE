@@ -9,7 +9,10 @@ import HomeCustomer from "../Customer/Pages/HomeCustomer/HomeCustomer";
 import AuthMiddleware from "./AuthMiddleware/AuthMiddleware";
 import ProjectDetail from "../Tester/Page/ProjectDetail/ProjectDetail";
 import Academy from "../Tester/Page/Academy/Academy";
-
+import ArticleDetail from "../Tester/Component/ArticleDetail/ArticleDetail";
+import ListBug from "../Tester/Page/ProjectDetail/ListBug/ListBug";
+import Chat from "../Tester/Page/ProjectDetail/Chat/Chat";
+import CreateBugReport from "../Tester/Page/CreateBugReport/CreateBugReport";
 const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
@@ -29,7 +32,45 @@ const router = createBrowserRouter([
 				name: "project-detail",
 				path: "project/:id",
 				element: <ProjectDetail />,
+				children: [
+					{
+						name: "/overview",
+						path: "",
+						element: <ArticleDetail></ArticleDetail>,
+					},
+					{
+						name: "session",
+						path: "session",
+						element: <ArticleDetail></ArticleDetail>,
+					},
+					{
+						name: "bugs",
+						path: "bugs",
+						element: <ListBug></ListBug>,
+					},
+					{
+						name: "known-bug",
+						path: "known-bug",
+						element: <ListBug></ListBug>,
+					},
+					{
+						name: "chat",
+						path: "chat",
+						element: <Chat></Chat>,
+					},
+					{
+						name: "teams",
+						path: "teams",
+						element: <ListBug></ListBug>,
+					},
+					{
+						name: "bug-create",
+						path: "bug/create",
+						element: <CreateBugReport></CreateBugReport>,
+					},
+				],
 			},
+
 			{
 				path: "ranking",
 				element: <Home />,
