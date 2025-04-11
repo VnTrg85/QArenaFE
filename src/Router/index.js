@@ -2,15 +2,20 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
 //Pages
-import Login from "../Page/Login/Login";
-import Home from "../Page/Home/Home";
+import Login from "../Pages/Login/Login";
+import Home from "../Tester/Page/Home/Home";
+import HomeCustomer from "../Customer/Pages/HomeCustomer/HomeCustomer";
+
 import AuthMiddleware from "./AuthMiddleware/AuthMiddleware";
-import ProjectDetail from "../Page/ProjectDetail/ProjectDetail";
-import Academy from "../Page/Academy/Academy";
+import ProjectDetail from "../Tester/Page/ProjectDetail/ProjectDetail";
+import Academy from "../Tester/Page/Academy/Academy";
 import Dashboard from "../Page/Dashboard/Dashboard";
 import ProjectPage from "../Page/Project/ProjectPage";
-
-const validRoutes = ["", "project/:id", "ranking"];
+import ArticleDetail from "../Tester/Component/ArticleDetail/ArticleDetail";
+import ListBug from "../Tester/Page/ProjectDetail/ListBug/ListBug";
+import Chat from "../Tester/Page/ProjectDetail/Chat/Chat";
+import CreateBugReport from "../Tester/Page/CreateBugReport/CreateBugReport";
+const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
 		path: "/login",
@@ -18,18 +23,56 @@ const router = createBrowserRouter([
 		element: <Login></Login>,
 	},
 	{
-		path: "/",
+		path: "/dGVzdGVy",
 		element: <AuthMiddleware validRoutes={validRoutes} />,
 		children: [
 			{
-				path: "/",
+				path: "",
 				element: <Home />,
 			},
 			{
-				name: "project-detai;",
+				name: "project-detail",
 				path: "project/:id",
 				element: <ProjectDetail />,
+				children: [
+					{
+						name: "/overview",
+						path: "",
+						element: <ArticleDetail></ArticleDetail>,
+					},
+					{
+						name: "session",
+						path: "session",
+						element: <ArticleDetail></ArticleDetail>,
+					},
+					{
+						name: "bugs",
+						path: "bugs",
+						element: <ListBug></ListBug>,
+					},
+					{
+						name: "known-bug",
+						path: "known-bug",
+						element: <ListBug></ListBug>,
+					},
+					{
+						name: "chat",
+						path: "chat",
+						element: <Chat></Chat>,
+					},
+					{
+						name: "teams",
+						path: "teams",
+						element: <ListBug></ListBug>,
+					},
+					{
+						name: "bug-create",
+						path: "bug/create",
+						element: <CreateBugReport></CreateBugReport>,
+					},
+				],
 			},
+
 			{
 				path: "ranking",
 				element: <Home />,
@@ -64,11 +107,21 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "dashboard",
-				element: <Dashboard/>,
+				element: <Dashboard />,
 			},
 			{
 				path: "project",
-				element: <ProjectPage/>,
+				element: <ProjectPage />,
+			},
+		],
+	},
+	{
+		path: "/Q3VzdG9tZXI=",
+		element: <AuthMiddleware validRoutes={validRoutes} />,
+		children: [
+			{
+				path: "",
+				element: <HomeCustomer />,
 			},
 		],
 	},
