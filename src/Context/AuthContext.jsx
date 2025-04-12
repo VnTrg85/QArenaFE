@@ -1,48 +1,22 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useCallback, useContext, useState, useEffect } from "react";
 
-const INITIAL_STATE = {
-	user: JSON.parse(localStorage.getItem("user")) || null,
-	loading: false,
-	error: null,
+const UserContext = createContext();
+
+export const UserProvider = ({ children }) => {
+	const storedUser = JSON.parse(localStorage.getItem("user"));
+
+	const [user, setUser] = useState(storedUser || { email: "", role: "" });
+
+	const setUserValue = useCallback(user => {
+		setUser(user);
+	}, []);
+
+	const getUserValue = () => user;
+
+	return <UserContext.Provider value={{ getUserValue, setUserValue }}>{children}</UserContext.Provider>;
 };
 
-export const AuthContext = createContext(null);
-
-const AuthReducer = (state, action) => {
-	switch (action.type) {
-		case "LOGIN_START":
-			return {
-				user: null,
-				loading: true,
-				error: null,
-			};
-		case "LOGIN_SUCCESS":
-			return {
-				user: action.payload,
-				loading: false,
-				error: null,
-			};
-		case "LOGIN_FAILURE":
-			return {
-				user: null,
-				loading: false,
-				error: action.payload,
-			};
-		case "LOGOUT":
-			return {
-				user: null,
-				loading: false,
-				error: null,
-			};
-		default:
-			return state;
-	}
-};
-
-export const AuthContextProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
-	useEffect(() => {
-		localStorage.setItem("user", JSON.stringify(state.user));
-	}, [state.user]);
-	return <AuthContext.Provider value={{ user: state.user, loading: state.loading, error: state.error, dispatch }}>{children}</AuthContext.Provider>;
+// 3. Hook để dùng Context dễ dàng
+export const useUser = () => {
+	return useContext(UserContext);
 };

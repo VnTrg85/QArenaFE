@@ -1,0 +1,51 @@
+.listbug-ctn {
+	font-family: "DM Sans", sans-serif;
+	margin-top: 20px;
+}
+
+.listbug-ctn body {
+	background-color: #f8f9fa;
+	margin: 20px;
+}
+.listbug-ctn table {
+	width: 100%;
+	border-collapse: collapse;
+	background: white;
+	font-size: 12px;
+}
+
+.listbug-ctn th,
+td {
+	padding: 12px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+.listbug-ctn td:last-child {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.listbug-ctn th {
+	background-color: #f4f4f4 !important;
+	font-weight: bold;
+}
+
+.listbug-ctn td:nth-child(11) {
+	text-align: center;
+	font-weight: bold;
+}
+
+.listbug-ctn td img {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	border: 2px solid white;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.new-label {
+	color: rgb(25, 144, 236);
+	font-weight: 600;
+}
