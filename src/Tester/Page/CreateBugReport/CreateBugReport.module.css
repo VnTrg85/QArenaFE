@@ -54,14 +54,13 @@
 	min-width: 150px;
 }
 
-select,
-input[type="text"],
-textarea {
+.create-bug-ctn select,
+.create-bug-ctn input[type="text"],
+.create-bug-ctn textarea {
 	width: 100%;
 	padding: 12px 15px;
 	border: 1px solid #e2e8f0;
 	border-radius: 8px;
-	box-sizing: border-box;
 	font-size: 14px;
 	transition: all 0.2s ease;
 	background-color: #f7fafc;
@@ -69,19 +68,23 @@ textarea {
 	color: black; /* Màu chữ trong input/textarea */
 }
 
+.create-bug-ctn textarea {
+	width: 96% !important;
+}
+
 select {
-	background-color: #027f77; /* Nền select nhạt hơn màu chính */
+	background-color: var(--primary-color); /* Nền select nhạt hơn màu chính */
 	color: white;
 	cursor: pointer;
 	font-family: "DM Sans", sans-serif;
 	width: 100%;
 	padding: 10px 40px 10px 10px; /* space for icon */
 	font-size: 14px;
-	appearance: none; /* hide default arrow */
+	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	border: 1px solid #ccc;
-	background-image: url("/public/icons/i-chevron-down.svg"); /* your custom icon */
+	background-image: url("/public/icons/i-chevron-down-color.svg"); /* your custom icon */
 	background-repeat: no-repeat;
 	background-position: right 10px center;
 	background-size: 16px 16px;
@@ -101,7 +104,7 @@ select {
 	cursor: pointer;
 	font-size: 14px;
 	font-weight: 500;
-	color: #027f77;
+	color: var(--primary-color);
 	transition: all 0.2s ease;
 }
 
@@ -111,9 +114,9 @@ select {
 }
 
 .severity-buttons button.active {
-	background-color: #027f77;
+	background-color: var(--primary-color);
 	color: #fff;
-	border-color: #027f77;
+	border-color: var(--primary-color);
 	box-shadow: 0 2px 8px rgba(2, 127, 119, 0.2);
 }
 
@@ -125,9 +128,9 @@ select {
 }
 
 .create-bug-ctn .step-number {
-	width: 35px;
+	width: 38px;
 	height: 30px;
-	background-color: #027f77; /* Màu step number */
+	background-color: var(--primary-color); /* Màu step number */
 	color: #fff;
 	border-radius: 50%;
 	display: flex;
@@ -148,7 +151,7 @@ select {
 	border-radius: 6px;
 	cursor: pointer;
 	transition: all 0.2s ease;
-	color: #027f77;
+	color: var(--primary-color);
 }
 
 .create-bug-ctn .step img {
@@ -166,7 +169,7 @@ select {
 	align-items: center;
 	padding: 10px 20px;
 	background-color: #e6f7f6;
-	color: #027f77;
+	color: var(--primary-color);
 	border: 1px solid #b7e3e0;
 	border-radius: 8px;
 	cursor: pointer;
@@ -183,12 +186,20 @@ select {
 	color: #015f58;
 }
 
+.add-attachment {
+	/* width: fit-content !important; */
+	min-width: fit-content !important;
+}
+.add-attachment img {
+	width: 20px;
+	height: 20px;
+}
 .create-bug-ctn .preview {
 	display: inline-flex;
 	align-items: center;
 	padding: 10px 20px;
 	background-color: #e6f7f6;
-	color: #027f77;
+	color: var(--primary-color);
 	border: 1px solid #e2e8f0;
 	border-radius: 8px;
 	cursor: pointer;
@@ -207,15 +218,16 @@ select {
 .create-bug-ctn .browsers {
 	display: flex;
 	gap: 15px;
-	margin-top: 10px;
 }
-
+.browsers .active {
+	background-color: var(--primary-color) !important;
+}
 .create-bug-ctn .browsers img {
-	width: 32px;
-	height: 32px;
-	border-radius: 4px;
+	width: 25px;
+	height: 25px;
+	border-radius: 50px;
 	border: 1px solid #e2e8f0;
-	padding: 4px;
+	padding: 5px;
 	background-color: #fff;
 }
 
@@ -245,7 +257,7 @@ select {
 	color: #222;
 	line-height: 1.7;
 	transition: all 0.3s ease;
-	border-left: 5px solid #027f77;
+	border-left: 5px solid var(--primary-color);
 }
 
 .create-bug-ctn .collapse-ctn {
@@ -288,4 +300,29 @@ select {
 }
 .is-collapse {
 	width: 10px !important;
+}
+
+.files-ctn {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin-top: -20px;
+	margin-bottom: 20px;
+}
+
+.file-item {
+	background: var(--primary-color);
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	padding: 5px;
+	color: white;
+	font-size: 12px;
+	width: fit-content;
+	border-radius: 10px;
+}
+.file-item img {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
 }

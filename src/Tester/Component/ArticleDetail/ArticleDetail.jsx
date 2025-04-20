@@ -11,25 +11,27 @@ function ArticleDetail({ project }) {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [article, setArticle] = useState(project);
-	const { showToast, ToastComponent } = useToast();
+	const { showToast } = useToast();
 	const [selectedFeature, setSelectedFeature] = useState(null);
 	useEffect(() => {
 		setArticle(project);
 	}, [project]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const res = await get_test_project_detail(id);
-			if (res.status == "success") {
-				setArticle(res.data);
-			} else {
-				showToast({
-					message: res.data,
-					type: "error",
-				});
-			}
-		};
-		fetchData();
+		if (id) {
+			const fetchData = async () => {
+				const res = await get_test_project_detail(id);
+				if (res.status == "success") {
+					setArticle(res.data);
+				} else {
+					showToast({
+						message: res.data || "Something went wrong",
+						type: "error",
+					});
+				}
+			};
+			fetchData();
+		}
 	}, [id]);
 
 	const handleNavigateToBugDetail = () => {
@@ -43,15 +45,14 @@ function ArticleDetail({ project }) {
 	};
 	return (
 		<div>
-			<ToastComponent></ToastComponent>
 			{article && (
 				<div className={cx("wrapper-container")}>
 					<div className={cx("container")}>
 						{!location.pathname.includes("project") && (
 							<div className={cx("container-header")}>
 								<h1>{article?.projectName}</h1>
-								<div className={cx("test-btn")}>
-									<span onClick={handleNavigateToBugDetail}>Test now</span>
+								<div onClick={handleNavigateToBugDetail} className={cx("test-btn")}>
+									<span>Test now</span>
 									<img src="/icons/i-chevron-white.svg"></img>
 								</div>
 							</div>
@@ -181,15 +182,12 @@ function ArticleDetail({ project }) {
 											<div className={cx("feature-section")}>
 												<h2>BUG TYPES</h2>
 												<div className={cx("bug-types")}>
-													<div className={cx("bug-item")}>
-														<span className={cx("triangle", "functional")}></span> Functional
-													</div>
-													<div className={cx("bug-item")}>
-														<span className={cx("triangle", "content")}></span> Content
-													</div>
-													<div className={cx("bug-item")}>
-														<span className={cx("triangle", "visual")}></span> Visual
-													</div>
+													{item.bugType.map(val => (
+														<div className={cx("bug-item")} key={val.id}>
+															<img src={val.icon_link}></img>
+															<span> {val.name}</span>
+														</div>
+													))}
 												</div>
 											</div>
 
@@ -225,12 +223,6 @@ function ArticleDetail({ project }) {
 					</div>
 					{location.pathname.includes("project") && (
 						<div className={cx("container-right")}>
-							<div className={cx("session-section")}>
-								<h3>Start a session</h3>
-								<div>
-									<img src="/icons/i-session.svg"></img>
-								</div>
-							</div>
 							<div className={cx("details")}>
 								<div className={cx("box")}>
 									<h2>Payout</h2>
@@ -257,7 +249,7 @@ function ArticleDetail({ project }) {
 									</table>
 								</div>
 							</div>
-							<div className={cx("device-ctn")}>
+							{/* <div className={cx("device-ctn")}>
 								<h5>Requested OS</h5>
 								<div className={cx("device-item")}>
 									<img src="/icons/i-computer.svg"></img>
@@ -269,8 +261,8 @@ function ArticleDetail({ project }) {
 										</div>
 									</div>
 								</div>
-							</div>
-							<div className={cx("device-ctn")}>
+							</div> */}
+							{/* <div className={cx("device-ctn")}>
 								<h5>Available for reproduction</h5>
 								<div className={cx("device-item")}>
 									<img src="/icons/i-mac.svg"></img>
@@ -282,7 +274,7 @@ function ArticleDetail({ project }) {
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> */}
 						</div>
 					)}
 				</div>

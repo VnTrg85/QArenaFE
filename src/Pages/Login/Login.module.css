@@ -77,6 +77,8 @@
 	background: #f7f7fb;
 	outline: none;
 	padding: 12px;
+	font-family: "DM Sans", sans-serif;
+	font-size: 14px;
 }
 .input-ctn img {
 	width: 20px;
@@ -141,19 +143,19 @@
 	top: -6px;
 }
 .active-role {
-	background: #027f77;
+	background: var(--primary-color);
 	color: white;
 	animation: fadein 0.5s;
 }
 @keyframes fadein {
 	0% {
-		background-color: #027f77;
+		background-color: var(--primary-color);
 	}
 	50% {
 		background-color: #038c8c;
 	}
 	100% {
-		background-color: #027f77;
+		background-color: var(--primary-color);
 	}
 }
 .roles-buttons {

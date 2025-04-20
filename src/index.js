@@ -4,11 +4,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./main.css";
 import { UserProvider } from "./Context/AuthContext";
+import { Provider } from "react-redux";
+import store from "./Store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-	<UserProvider>
-		<App />
-	</UserProvider>,
+	<Provider store={store}>
+		<UserProvider>
+			<App />
+		</UserProvider>
+	</Provider>,
 );
 
 // If you want to start measuring performance in your app, pass a function
