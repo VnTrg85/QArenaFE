@@ -1,0 +1,22 @@
+.modal-overlay {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 10;
+	background: rgba(0, 0, 0, 0.5);
+	font-family: "DM Sans", sans-serif;
+}
+.modal-content {
+	width: 40%;
+	overflow: auto;
+	z-index: 100;
+	background-color: white;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	font-family: "DM Sans", sans-serif;
+}

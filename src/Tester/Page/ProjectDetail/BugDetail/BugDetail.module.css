@@ -39,7 +39,7 @@
 }
 
 .bug-title {
-	border-left: 5px solid #027f77;
+	border-left: 5px solid var(--primary-color);
 	padding: 0 10px;
 	color: #1a2b49;
 	font-size: 25px;
@@ -55,17 +55,6 @@
 	font-size: 1.3em;
 	font-weight: 600;
 	margin-bottom: 15px;
-}
-
-.attachments video {
-	width: 100%;
-	border-radius: 12px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-	transition: transform 0.2s ease;
-}
-
-.attachments video:hover {
-	transform: scale(1.02);
 }
 
 /* Steps - Thiết kế đẹp mắt và chuẩn mực */
@@ -112,7 +101,7 @@
 	transform: translateY(-50%);
 	width: 34px;
 	height: 34px;
-	background: #027f77;
+	background: var(--primary-color);
 	color: #fff;
 	border-radius: 50%;
 	display: flex;
@@ -137,7 +126,7 @@
 }
 
 .url p {
-	color: #027f77;
+	color: var(--primary-color);
 	text-decoration: none;
 	transition: color 0.2s ease;
 	margin: 5px 0 0 0;
@@ -227,7 +216,7 @@
 	border-radius: 25px;
 	cursor: pointer;
 	transition: all 0.3s ease;
-	background: #027f77;
+	background: var(--primary-color);
 }
 .send-button:hover {
 	background: #1e9c93;
@@ -308,7 +297,7 @@
 	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 	position: relative;
 	overflow: hidden;
-	background: #027f77;
+	background: var(--primary-color);
 	border-top-right-radius: 20px;
 	border-bottom-left-radius: 20px;
 }
@@ -392,6 +381,10 @@
 	gap: 4px;
 	font-weight: 500;
 }
+.icon img {
+	width: 20px;
+	height: 20px;
+}
 
 .tester-info,
 .device-info {
@@ -406,6 +399,10 @@
 	height: 24px;
 	border-radius: 50%;
 	object-fit: cover;
+}
+
+.device-info img {
+	border-radius: 0 !important;
 }
 
 /* Responsive Design */

@@ -5,11 +5,15 @@ import ArticleDetail from "../../Component/ArticleDetail/ArticleDetail";
 import { useUser } from "../../../Context/AuthContext";
 import { useEffect, useMemo, useState } from "react";
 import { get_test_projects } from "../../Service/TestProject";
+import { useDispatch, useSelector } from "react-redux";
+import { addNotification } from "../../../Store/notificationSlice";
+import useToast from "../../../CustomHook/useToast";
 const cx = classname.bind(styles);
+
 function Home() {
 	//HOOKS
 	const { getUserValue } = useUser();
-
+	const { showToast } = useToast();
 	//STATE
 	const [testProjects, setTestProjects] = useState([]);
 	const [tabActive, setTabActive] = useState("OPENING");
@@ -36,6 +40,7 @@ function Home() {
 		setSelectedArticle(list[0]);
 		return list;
 	}, [tabActive, testProjects]);
+
 	//METHODS
 
 	const handleChangeActiveTab = tab => {

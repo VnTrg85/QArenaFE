@@ -48,3 +48,8 @@
 	width: 20px;
 	height: 20px;
 }
+
+.active {
+	border: 1px solid var(--primary-color);
+	background-color: white;
+}

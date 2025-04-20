@@ -3,20 +3,26 @@ import classname from "classnames/bind";
 import { DndContext, useSensor, useSensors, PointerSensor, closestCenter } from "@dnd-kit/core";
 import { SortableContext, useSortable, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { get_feature_by_id, get_feature_by_project_id } from "../../../Services/FeatureService";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useToast from "../../../CustomHook/useToast";
-
+import { useUser } from "../../../Context/AuthContext";
+import { useSelector, useDispatch } from "react-redux";
+import { get_user_device } from "../../../Services/DeviceService";
+import { SubmitContext } from "../../Context/SubmitContext";
+import { addNotification } from "../../../Store/notificationSlice";
+import { create_bug_report } from "../../../Services/BugReportService";
+import ModalSaving from "../../Component/Modal/ModalSaving/ModalSaving";
 const cx = classname.bind(styles);
-
+const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
+const UPLOAD_PRESET = process.env.REACT_APP_UPLOAD_PRESET;
 const StepItem = ({ id, index, onDelete, step, onInputChange }) => {
 	const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 	const style = {
 		transform: CSS.Transform.toString(transform),
 		transition,
 	};
-
 	return (
 		<div ref={setNodeRef} style={style} className={cx("step")} {...attributes}>
 			<div className={cx("step-number")}>{index + 1}</div>
@@ -32,17 +38,210 @@ const StepItem = ({ id, index, onDelete, step, onInputChange }) => {
 };
 
 function CreateBugReport() {
-	const { showToast, ToastComponent } = useToast();
 	//State
+	const { submitTrigger, setSubmitTrigger } = useContext(SubmitContext);
+	const location = useLocation();
+	const dispatch = useDispatch();
+	const session = useSelector(state =>
+		state.session.find(element => element?.testProject?.id == location.pathname.split("/")[3] && element.status == "doing"),
+	);
+	const navigate = useNavigate();
+
+	const { getUserValue } = useUser();
 	const [isCollapse, setIsCollapse] = useState(false);
 	const [features, setFeatures] = useState([]);
 	const [bugTypes, setBugTypes] = useState([]);
+	const [title, setTitle] = useState("");
+	const [url, setUrl] = useState("");
+	const [description, setDescription] = useState("");
+	const [expectedResult, setExpectedResult] = useState("");
 	const [selectedFeature, setSelectedFeature] = useState("");
-	const location = useLocation();
+	const [selectedBugType, setSelectedBugType] = useState("");
+	const [devices, setDevices] = useState([]);
+	const [currentDevice, setCurrentDevice] = useState();
+	const [files, setFiles] = useState([]);
+	const [currentBrowser, setCurrentBrowser] = useState(null);
+	const [isSaving, setIsSaving] = useState(false);
+	const { showToast } = useToast();
+	const sessionDoing = useSelector(state =>
+		state.session?.find(element => element?.testProject?.id == location.pathname.split("/")[3] && element.status == "doing"),
+	);
+	//More
+	const sensors = useSensors(useSensor(PointerSensor));
 	const [steps, setSteps] = useState([
 		{ id: "step-1", text: "" },
 		{ id: "step-2", text: "" },
 	]);
+	const checkValidData = () => {
+		if (!selectedFeature) {
+			showToast({
+				message: "Please select feature",
+				type: "error",
+			});
+			return false;
+		}
+		if (!selectedBugType) {
+			showToast({
+				message: "Please select bug type",
+				type: "error",
+			});
+			return false;
+		}
+		if (title == "") {
+			showToast({
+				message: "Please fill title",
+				type: "error",
+			});
+			return false;
+		}
+		if (description == "") {
+			showToast({
+				message: "Please fill description",
+				type: "error",
+			});
+			return false;
+		}
+		if (expectedResult == "") {
+			showToast({
+				message: "Please fill expected results",
+				type: "error",
+			});
+			return false;
+		}
+		if (steps.length <= 0 || steps.some(item => item.text == "")) {
+			showToast({
+				message: "Step must not be empty",
+				type: "error",
+			});
+			return false;
+		}
+		if (url == "") {
+			showToast({
+				message: "Please fill url",
+				type: "error",
+			});
+			return false;
+		}
+		if (files.length == 0) {
+			showToast({
+				message: "Please select file bug",
+				type: "error",
+			});
+			return false;
+		}
+		if (!currentBrowser) {
+			showToast({
+				message: "Please select browser",
+				type: "error",
+			});
+			return false;
+		}
+		return true;
+	};
+	useEffect(() => {
+		if (submitTrigger == true) {
+			const handleSubmitBugReport = async () => {
+				if (!checkValidData()) {
+					setSubmitTrigger(false);
+					return;
+				}
+				setIsSaving(true);
+				const stepString = steps.map(item => item.text);
+				const fileList = await uploadToCloudinary();
+				if (!fileList) {
+					showToast({
+						message: "Error when upload file",
+						type: "error",
+					});
+				}
+				const data = {
+					title: title,
+					url_test: url,
+					actual_result: description,
+					expected_result: expectedResult,
+					reproductionSteps: stepString,
+					screenshotUrl: fileList,
+					status: "awaiting",
+					reported_at: Date.now(),
+					browser: { id: currentBrowser },
+					bugType: { id: selectedBugType },
+					testProject: { id: Number(location.pathname.split("/")[3]) },
+					testFeature: { id: selectedFeature.id },
+					user: { id: getUserValue().id },
+					session: { id: sessionDoing.id },
+					device: { id: Number(currentDevice) },
+					versionSelected: devices.find(item => item.id == currentDevice).versionSelected,
+				};
+				const res = await create_bug_report(data);
+				if (res.status == "success") {
+					navigate(`/dGVzdGVy/project/${location.pathname.split("/")[3]}/bugs/${res.data.id}`);
+				} else {
+					showToast({
+						message: "Something went wrong",
+						type: "error",
+					});
+				}
+				setIsSaving(false);
+				setSubmitTrigger(false);
+			};
+			handleSubmitBugReport();
+		}
+	}, [submitTrigger]);
+	useEffect(() => {
+		if (!session) {
+			navigate(`/dGVzdGVy/project/${location.pathname.split("/")[3]}`);
+		}
+	}, [session]);
+
+	useEffect(() => {
+		const fetchDataDevice = async () => {
+			const res = await get_user_device(getUserValue().id);
+			if (res.status == "success") {
+				setDevices(res.data);
+				setCurrentDevice(res.data[0].id);
+			} else {
+				dispatch(
+					addNotification({
+						message: res.data | "Something went wrong",
+						type: "error",
+					}),
+				);
+			}
+		};
+
+		fetchDataDevice();
+	}, []);
+
+	//METHOD
+	async function uploadToCloudinary() {
+		const cloudName = CLOUD_NAME;
+		const uploadPreset = UPLOAD_PRESET;
+
+		const uploadPromises = Array.from(files).map(file => {
+			const formData = new FormData();
+			formData.append("file", file);
+			formData.append("upload_preset", uploadPreset);
+
+			return fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+				method: "POST",
+				body: formData,
+			})
+				.then(res => res.json())
+				.then(data => {
+					return data.secure_url;
+				})
+				.catch(e => {
+					console.log(e);
+				});
+		});
+
+		try {
+			const results = await Promise.all(uploadPromises);
+			return results;
+		} catch (err) {
+			console.error("Lỗi upload:", err);
+		}
+	}
 	const handleAddStep = () => {
 		setSteps(prev => [
 			...prev,
@@ -59,11 +258,9 @@ function CreateBugReport() {
 				if (res.status == "success") {
 					setSelectedFeature(res.data);
 					setBugTypes(res.data.bugType);
+					setSelectedBugType(res.data.bugType[0].id);
 				} else {
-					showToast({
-						message: res.data || "Some thing went wrong",
-						type: res.status || "error",
-					});
+					dispatch(addNotification({ message: res.data || "Some thing went wrong", type: res.status || "error" }));
 				}
 			} else {
 				setBugTypes([]);
@@ -72,7 +269,6 @@ function CreateBugReport() {
 		};
 		getFeature();
 	};
-	const sensors = useSensors(useSensor(PointerSensor));
 
 	const handleDragEnd = event => {
 		const { active, over } = event;
@@ -110,8 +306,36 @@ function CreateBugReport() {
 
 		fetchData();
 	}, []);
+	const listBrowsers = useMemo(() => {
+		if (currentDevice) {
+			const de = devices.find(item => item.id == currentDevice);
+			const listBr = de.browsers?.reduce((acc, item) => {
+				for (let i = 0; i < de.browserIds.length; i++) {
+					const element = de.browserIds[i];
+					if (element == item.id) acc.push(item);
+				}
+				return acc;
+			}, []);
+			return listBr;
+		}
+	}, [currentDevice]);
+	const handleChangeFile = e => {
+		setFiles(prev => [...prev, e.target.files[0]]);
+		e.target.files = null;
+	};
+
+	const handleDeleteFile = index => {
+		setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
+	};
 	return (
 		<div className={cx("create-bug-ctn")}>
+			{isSaving && (
+				<ModalSaving>
+					<div className={cx("saving")}>
+						<img src="/icons/i-loading.svg"></img>
+					</div>
+				</ModalSaving>
+			)}
 			<div className={cx("container-left")}>
 				<div className={cx("container-left-header")}>Submit a bug</div>
 				<div className={cx("form-group")}>
@@ -128,21 +352,40 @@ function CreateBugReport() {
 
 				<div className={cx("form-group")}>
 					<label htmlFor="bug-type">Bug type</label>
-					<select id="bug-type">
+					<select
+						onChange={e => {
+							setSelectedBugType(e.target.value);
+						}}
+						id="bug-type"
+					>
 						{bugTypes.map((item, index) => (
-							<option key={item.id}>{item.name}</option>
+							<option key={item.id} value={item.id}>
+								{item.name}
+							</option>
 						))}
 					</select>
 				</div>
 
 				<div className={cx("form-group")}>
 					<label htmlFor="title">Title</label>
-					<input type="text" id="title" />
+					<input
+						onInput={e => {
+							setTitle(e.target.value);
+						}}
+						type="text"
+						id="title"
+					/>
 				</div>
 
 				<div className={cx("form-group")}>
 					<label htmlFor="url">Url</label>
-					<input type="text" id="url" />
+					<input
+						onInput={e => {
+							setUrl(e.target.value);
+						}}
+						type="text"
+						id="url"
+					/>
 				</div>
 
 				<div className={cx("form-group-second")}>
@@ -169,7 +412,13 @@ function CreateBugReport() {
 
 				<div className={cx("form-group-second")}>
 					<label htmlFor="result">Result description</label>
-					<textarea id="result" rows="4"></textarea>
+					<textarea
+						onInput={e => {
+							setDescription(e.target.value);
+						}}
+						id="result"
+						rows="4"
+					></textarea>
 					<a href="#" className={cx("preview")}>
 						Preview
 					</a>
@@ -177,7 +426,13 @@ function CreateBugReport() {
 
 				<div className={cx("form-group-second")}>
 					<label htmlFor="expected">Expected result</label>
-					<textarea id="expected" rows="4"></textarea>
+					<textarea
+						onInput={e => {
+							setExpectedResult(e.target.value);
+						}}
+						id="expected"
+						rows="4"
+					></textarea>
 					<a href="#" className={cx("preview")}>
 						Preview
 					</a>
@@ -185,22 +440,55 @@ function CreateBugReport() {
 
 				<div className={cx("form-group")}>
 					<label>Upload attachment(s)</label>
-					<a href="#" className={cx("add-attachment")}>
+					<label for="source" className={cx("add-attachment")}>
 						+ Add attachment
-					</a>
+					</label>
+					<input onChange={e => handleChangeFile(e)} type="file" accept="video/mp4" hidden id="source"></input>
+				</div>
+				<div className={cx("files-ctn")}>
+					{files.map((item, index) => (
+						<div className={cx("file-item")}>
+							<span>{item.name}</span>
+							<img
+								onClick={() => {
+									handleDeleteFile(index);
+								}}
+								src="/icons/i-close.svg"
+							></img>
+						</div>
+					))}
 				</div>
 
 				<div className={cx("form-group")}>
 					<label>Browsers used</label>
-					<div className={cx("browser-ctn")}>
-						<p>Apple iPhone 12 | iOS 17.0.1</p>
-
-						<div className={cx("browsers")}>
-							<img src="/icons/i-safari.svg" alt="Safari" />
-							<img src="/icons/i-google.svg" alt="Chrome" />
-							<img src="/icons/i-fire-fox.svg" alt="Firefox" />
-						</div>
+					<div>
+						<select
+							onChange={e => {
+								setCurrentDevice(e.target.value);
+							}}
+						>
+							{devices.map(val => (
+								<option key={val.id} value={val.id}>
+									{val.devices.name}
+								</option>
+							))}
+						</select>
 					</div>
+					{currentDevice && (
+						<div className={cx("browser-ctn")}>
+							<div className={cx("browsers")}>
+								{listBrowsers.map(val => (
+									<img
+										key={val.id}
+										onClick={() => setCurrentBrowser(val.id)}
+										className={cx(currentBrowser == val.id ? "active" : "")}
+										src={val.icon_link}
+										title={val.name}
+									/>
+								))}
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 			<div className={cx("container-right", isCollapse ? "is-collapse" : "")}>
