@@ -13,6 +13,9 @@ import ArticleDetail from "../Tester/Component/ArticleDetail/ArticleDetail";
 import ListBug from "../Tester/Page/ProjectDetail/ListBug/ListBug";
 import Chat from "../Tester/Page/ProjectDetail/Chat/Chat";
 import CreateBugReport from "../Tester/Page/CreateBugReport/CreateBugReport";
+import DeviceManager from "../Tester/Page/DeviceManager/DeviceManager";
+import SessionManager from "../Tester/Page/ProjectDetail/Session/SessionManager";
+import BugDetail from "../Tester/Page/ProjectDetail/BugDetail/BugDetail";
 const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
@@ -34,14 +37,14 @@ const router = createBrowserRouter([
 				element: <ProjectDetail />,
 				children: [
 					{
-						name: "/overview",
+						name: "overview",
 						path: "",
 						element: <ArticleDetail></ArticleDetail>,
 					},
 					{
 						name: "session",
 						path: "session",
-						element: <ArticleDetail></ArticleDetail>,
+						element: <SessionManager></SessionManager>,
 					},
 					{
 						name: "bugs",
@@ -68,6 +71,11 @@ const router = createBrowserRouter([
 						path: "bug/create",
 						element: <CreateBugReport></CreateBugReport>,
 					},
+					{
+						name: "bug-detail",
+						path: "bugs/:id",
+						element: <BugDetail></BugDetail>,
+					},
 				],
 			},
 
@@ -85,7 +93,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "your-devices",
-				element: <Home />,
+				element: <DeviceManager />,
 			},
 			{
 				path: "billing",

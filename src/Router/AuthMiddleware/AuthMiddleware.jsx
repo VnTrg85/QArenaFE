@@ -20,7 +20,7 @@ const isValidRoute = (path, validRoutes) => {
 };
 
 const AuthMiddleware = ({ validRoutes }) => {
-	const { showToast, ToastComponent } = useToast();
+	const { showToast } = useToast();
 	const location = useLocation();
 	const currentPath = location.pathname.replace("/", ""); // Lấy route hiện tại
 	const [isAuth, setIsAuth] = useState(null);
@@ -83,7 +83,6 @@ const AuthMiddleware = ({ validRoutes }) => {
 			return (
 				<DefaultLayout>
 					<Outlet />
-					<ToastComponent></ToastComponent>
 				</DefaultLayout>
 			);
 		} else if (getUserValue().role == "2" && currentPath.includes("Q3VzdG9tZXI=")) {

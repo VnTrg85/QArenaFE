@@ -1,0 +1,11 @@
+.modal-overlay {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 10;
+	background: rgba(0, 0, 0, 0.5);
+	font-family: "DM Sans", sans-serif;
+}

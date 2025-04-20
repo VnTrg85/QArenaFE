@@ -78,7 +78,7 @@ p {
 	color: white;
 	font-size: 15px;
 	margin-top: 50px;
-	background: #027f77;
+	background: var(--primary-color);
 	font-weight: 500;
 	border: none;
 }
@@ -133,7 +133,7 @@ p {
 .active {
 	font-size: 15px;
 	font-weight: 600;
-	color: #027f77;
+	color: var(--primary-color);
 	background-color: #f3fcfb;
-	border-bottom: 3px solid #027f77;
+	border-bottom: 3px solid var(--primary-color);
 }

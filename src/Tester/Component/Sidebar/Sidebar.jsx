@@ -14,7 +14,12 @@ function Sidebar() {
 	return (
 		<div className={cx("sidebar-ctn")}>
 			<div className={cx("sidebar-divider")}>
-				<div className={cx("sidebar-item", "active")}>
+				<div
+					onClick={() => {
+						navigate("/dGVzdGVy");
+					}}
+					className={cx("sidebar-item", "active")}
+				>
 					<div className={cx("sidebar-item-img")}>
 						<img src="/icons/i-dashboard-active.svg"></img>
 					</div>

@@ -1,9 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import classname from "classnames/bind";
 
 const cx = classname.bind(styles);
 
 function Header() {
+	const navigate = useNavigate();
+	const handleNavigate = path => {
+		navigate(`/dGVzdGVy/${path}`);
+	};
 	return (
 		<div className={cx("header-ctn")}>
 			<div className={cx("header-ctn-left")}>
@@ -22,7 +27,12 @@ function Header() {
 					</div>
 					<div class={cx("divider")}></div>
 
-					<div className={cx("header-item")}>
+					<div
+						onClick={() => {
+							handleNavigate("your-devices");
+						}}
+						className={cx("header-item", "active")}
+					>
 						<img src="/icons/i-device.svg" />
 						<span>Your Devices</span>
 					</div>
