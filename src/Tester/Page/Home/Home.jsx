@@ -40,6 +40,7 @@ function Home() {
 		setSelectedArticle(list[0]);
 		return list;
 	}, [tabActive, testProjects]);
+
 	//METHODS
 
 	const handleChangeActiveTab = tab => {

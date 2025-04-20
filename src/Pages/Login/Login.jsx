@@ -439,7 +439,6 @@ const Login = () => {
 					</div>
 				</div>
 			)}
-			<ToastComponent></ToastComponent>
 		</div>
 	);
 };
