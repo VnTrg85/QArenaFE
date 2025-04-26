@@ -7,33 +7,24 @@ import {
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { get_userCourse } from "../../Service/Academy";
 
 const cx = classNames.bind(styles);
 
 function Academy() {
   const [openIndex, setOpenIndex] = useState(null);
   const [courses, setCourses] = useState([]);
-
-  const coreCourses = courses.filter((course) => course.type === "core");
-  const advancedCourses = courses.filter((course) => course.type === "advance");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/course/getAll`
-        );
-        if (res.data && res.data.code === 1000) {
-          setCourses(res.data.data);
-        } else {
-          console.error("Unexpected response format", res);
-        }
+        const res = await get_userCourse();
+        setCourses(res);
       } catch (error) {
-        console.error("Error fetching courses:", error);
+        setErrorMessage(error.message);
       }
     };
-
     fetchCourses();
   }, []);
 
@@ -41,6 +32,10 @@ function Academy() {
     const key = `${type}-${index}`;
     setOpenIndex(openIndex === key ? null : key);
   };
+
+  const coreCourses = courses.filter((course) => course.type === "core");
+  const basicCourses = courses.filter((course) => course.type === "basic");
+  const advancedCourses = courses.filter((course) => course.type === "advance");
 
   return (
     <section className={cx("wrapper")}>
@@ -86,7 +81,6 @@ function Academy() {
           </div>
         </div>
 
-        {/* Hiển thị các khóa học core */}
         {coreCourses.length > 0 && (
           <div className={cx("academy-section")}>
             <div className={cx("section-header")}>
@@ -99,28 +93,49 @@ function Academy() {
                 <div className={cx("activities-grid")}>
                   {coreCourses.map((course, index) => {
                     const key = `core-${index}`;
+                    const isDisabled = course.isBlocked;
+                    const completedLessons =
+                      course.lessons?.filter((lesson) => lesson.isCompleted)
+                        .length || 0;
+                    const totalLessons = course.lessons?.length || 0;
+
                     return (
-                      <div key={course.id} className={cx("accordion-card")}>
+                      <div
+                        key={course.id}
+                        className={cx("accordion-card", {
+                          disable: isDisabled,
+                          completed: course.isComplete,
+                        })}
+                      >
                         <div
                           className={cx("accordion-header")}
-                          onClick={() => toggleAccordion("core", index)}
+                          onClick={() =>
+                            !isDisabled && toggleAccordion("core", index)
+                          }
                         >
+                          <img
+                            src={course.linkImg}
+                            alt={course.title}
+                            className={cx("thumbnail")}
+                          />
                           <div className={cx("accordion-title")}>
                             {course.title}
+                            <div className={cx("accordion-description")}>
+                              {course.description}
+                            </div>
+                            <div className={cx("lesson-progress")}>
+                              {completedLessons} / {totalLessons} lessons
+                              completed
+                            </div>
                           </div>
                           <span className={cx("accordion-tag")}>
-                            Earn more money
+                            {isDisabled ? "Locked" : "Earn more money"}
                           </span>
                           <FontAwesomeIcon
                             icon={
                               openIndex === key ? faChevronUp : faChevronDown
                             }
                           />
-                        </div>
-                        <div className={cx("accordion-description")}>
-                          {course.lessons?.length > 0
-                            ? `${course.lessons.length} lessons`
-                            : "No lessons available"}
                         </div>
                         {openIndex === key && (
                           <div className={cx("accordion-body")}>
@@ -130,6 +145,97 @@ function Academy() {
                                   key={lesson.id}
                                   className={cx("lesson-item")}
                                 >
+                                  <img
+                                    src={lesson.linkImg}
+                                    alt={lesson.title}
+                                    className={cx("thumbnail")}
+                                  />
+                                  <span>{lesson.title}</span>
+                                </div>
+                              ))
+                            ) : (
+                              <div className={cx("lesson-item")}>
+                                No lessons available
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Hiển thị các khóa học core */}
+        {basicCourses.length > 0 && (
+          <div className={cx("academy-section")}>
+            <div className={cx("section-header")}>
+              <h3 className={cx("section-title")}>Activities</h3>
+            </div>
+            <div className={cx("section-body")}>
+              <div className={cx("grid-uncompleted-modules")}>
+                <div className={cx("activities-grid")}>
+                  {basicCourses.map((course, index) => {
+                    const key = `basic-${index}`;
+                    const isDisabled = course.isBlocked;
+                    const completedLessons =
+                      course.lessons?.filter((lesson) => lesson.isCompleted)
+                        .length || 0;
+                    const totalLessons = course.lessons?.length || 0;
+
+                    return (
+                      <div
+                        key={course.id}
+                        className={cx("accordion-card", {
+                          disable: isDisabled,
+                          completed: course.isComplete,
+                        })}
+                      >
+                        <div
+                          className={cx("accordion-header")}
+                          onClick={() =>
+                            !isDisabled && toggleAccordion("basic", index)
+                          }
+                        >
+                          <img
+                            src={course.linkImg}
+                            alt={course.title}
+                            className={cx("thumbnail")}
+                          />
+                          <div className={cx("accordion-title")}>
+                            {course.title}
+                            <div className={cx("accordion-description")}>
+                              {course.description}
+                            </div>
+                            <div className={cx("lesson-progress")}>
+                              {completedLessons} / {totalLessons} lessons
+                              completed
+                            </div>
+                          </div>
+                          <span className={cx("accordion-tag")}>
+                            {isDisabled ? "Locked" : "Basic Course"}
+                          </span>
+                          <FontAwesomeIcon
+                            icon={
+                              openIndex === key ? faChevronUp : faChevronDown
+                            }
+                          />
+                        </div>
+                        {openIndex === key && (
+                          <div className={cx("accordion-body")}>
+                            {course.lessons?.length > 0 ? (
+                              course.lessons.map((lesson) => (
+                                <div
+                                  key={lesson.id}
+                                  className={cx("lesson-item")}
+                                >
+                                  <img
+                                    src={lesson.linkImg}
+                                    alt={lesson.title}
+                                    className={cx("thumbnail")}
+                                  />
                                   <span>{lesson.title}</span>
                                 </div>
                               ))
@@ -159,31 +265,48 @@ function Academy() {
             </div>
             <div className={cx("section-body")}>
               <div className={cx("grid-uncompleted-modules")}>
-                <div className={cx("flex-mandatory-modules")}>
+                <div className={cx("activities-grid")}>
                   {advancedCourses.map((course, index) => {
                     const key = `advanced-${index}`;
+                    const completedLessons =
+                      course.lessons?.filter((lesson) => lesson.isCompleted)
+                        .length || 0;
+                    const totalLessons = course.lessons?.length || 0;
+
                     return (
-                      <div key={course.id} className={cx("accordion-card")}>
+                      <div
+                        key={course.id}
+                        className={cx("accordion-card", {
+                          completed: course.isComplete,
+                        })}
+                      >
                         <div
                           className={cx("accordion-header")}
                           onClick={() => toggleAccordion("advanced", index)}
                         >
+                          <img
+                            src={course.linkImg}
+                            alt={course.title}
+                            className={cx("thumbnail")}
+                          />
                           <div className={cx("accordion-title")}>
                             {course.title}
+                            <div className={cx("accordion-description")}>
+                              {course.description}
+                            </div>
+                            <div className={cx("lesson-progress")}>
+                              {completedLessons} / {totalLessons} lessons
+                              completed
+                            </div>
                           </div>
                           <span className={cx("accordion-tag")}>
-                            Core Course
+                            Advance Course
                           </span>
                           <FontAwesomeIcon
                             icon={
                               openIndex === key ? faChevronUp : faChevronDown
                             }
                           />
-                        </div>
-                        <div className={cx("accordion-description")}>
-                          {course.lessons?.length > 0
-                            ? `${course.lessons.length} lessons`
-                            : "No lessons available"}
                         </div>
                         {openIndex === key && (
                           <div className={cx("accordion-body")}>
@@ -193,6 +316,11 @@ function Academy() {
                                   key={lesson.id}
                                   className={cx("lesson-item")}
                                 >
+                                  <img
+                                    src={lesson.linkImg}
+                                    alt={lesson.title}
+                                    className={cx("thumbnail")}
+                                  />
                                   <span>{lesson.title}</span>
                                 </div>
                               ))
