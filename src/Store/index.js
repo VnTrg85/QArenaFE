@@ -7,7 +7,6 @@ const store = configureStore({
 		session: sessionReducer,
 		notification: notificationReducer,
 		currentProject: testProjectSlice,
-		currentCourse: courseSlice,
 	},
 });
 
