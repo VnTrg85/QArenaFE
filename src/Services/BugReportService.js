@@ -48,3 +48,19 @@ export const get_bug_report_detail = async id => {
 		}
 	}
 };
+
+export const get_report_sumary = async id => {
+	try {
+		const res = await axios.get(`${base_url_api}/bugReport/getSumary/${id}`);
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};

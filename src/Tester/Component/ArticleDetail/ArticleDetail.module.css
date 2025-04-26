@@ -248,6 +248,7 @@ td {
 	background-color: var(--primary-color);
 	color: white;
 	opacity: 0.5;
+	pointer-events: none;
 }
 .button {
 	background-color: var(--primary-color);
@@ -383,6 +384,45 @@ td {
 .device-item-content div {
 	display: flex;
 	gap: 10px;
+}
+
+.confirm-label {
+	font-size: 25px;
+	margin: 0;
+	padding: 10px;
+	background: var(--primary-color);
+	color: white;
+	text-align: center;
+}
+
+.confirm-title {
+	text-align: center;
+	width: 100%;
+	padding: 20px;
+}
+
+.confirm-btn {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+.confirm-btn-cancle {
+	background: white;
+	color: black;
+	border: 1px solid var(--primary-color);
+	padding: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.confirm-btn-accept {
+	color: white;
+	border: none;
+	background-color: var(--primary-color);
+	padding: 10px;
+	border-radius: 10px;
+	cursor: pointer;
 }
 @keyframes slideDown {
 	0% {

@@ -14,6 +14,7 @@ const cx = classname.bind(styles);
 function BugDetail() {
 	const location = useLocation();
 	const bugId = location.pathname.split("/")[5];
+	const testProjectId = location.pathname.split("/")[3];
 	const { getUserValue } = useUser();
 	const { showToast } = useToast();
 	const [bugDetail, setBugDetail] = useState(null);
@@ -30,8 +31,8 @@ function BugDetail() {
 		sendMessageBug({
 			content: input,
 			user: { id: userId },
-			bugReport: { id: bugId },
-			testProject: null,
+			bugReportId: bugId,
+			testProjectId: testProjectId,
 			time_created: Date.now(),
 		});
 		setInput("");
@@ -153,7 +154,7 @@ function BugDetail() {
 						<div className={cx("comment-section")}>
 							<div className={cx("comment-header")}>
 								<span className={cx("active-tab")}>
-									Comments <span className={cx("count")}>(1)</span>
+									Comments <span className={cx("count")}></span>
 								</span>
 							</div>
 							<div className={cx("comment-box")}>

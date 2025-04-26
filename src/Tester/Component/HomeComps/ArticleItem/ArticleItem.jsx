@@ -3,7 +3,7 @@ import classname from "classnames/bind";
 import { formatDate, formatMonth } from "../../../../Utils/formatTime";
 const cx = classname.bind(styles);
 
-function ArticleItem({ project, active }) {
+function ArticleItem({ onClick, project, active }) {
 	const getMaxPayout = () => {
 		if (project.testProject.payoutBugs.length == 0) return 0;
 		const max = project.testProject.payoutBugs.reduce((acc, item) => {
@@ -20,7 +20,7 @@ function ArticleItem({ project, active }) {
 	};
 	return (
 		<div>
-			<div class={cx("task-card", active ? "active" : "")}>
+			<div onClick={onClick} class={cx("task-card", active ? "active" : "")}>
 				<div class={active ? cx("task-status") : ""}></div>
 				<div class={cx("task-content")}>
 					<div class={cx("task-header")}>

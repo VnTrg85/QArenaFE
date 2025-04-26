@@ -24,6 +24,14 @@ export const formatDateTimeFunc = time => {
 	const month = String(date.getMonth() + 1).padStart(2, "0");
 	const year = date.getFullYear();
 
-	const formatted = `${hours}-${minutes} ${day}-${month}-${year}`;
+	const formatted = `${hours}h-${minutes}m ${day}-${month}-${year}`;
 	return formatted;
+};
+
+export const formatDateBirth = time => {
+	const date = new Date(time);
+	const options = { month: "short", day: "2-digit", year: "numeric" };
+	const formattedDate = date.toLocaleDateString("en-US", options);
+
+	return formattedDate;
 };
