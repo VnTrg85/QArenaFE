@@ -13,6 +13,13 @@ import ArticleDetail from "../Tester/Component/ArticleDetail/ArticleDetail";
 import ListBug from "../Tester/Page/ProjectDetail/ListBug/ListBug";
 import Chat from "../Tester/Page/ProjectDetail/Chat/Chat";
 import CreateBugReport from "../Tester/Page/CreateBugReport/CreateBugReport";
+import DeviceManager from "../Tester/Page/DeviceManager/DeviceManager";
+import SessionManager from "../Tester/Page/ProjectDetail/Session/SessionManager";
+import BugDetail from "../Tester/Page/ProjectDetail/BugDetail/BugDetail";
+import Notification from "../Tester/Page/Notification/Notification";
+import Team from "../Tester/Page/ProjectDetail/Team/Team";
+import Profile from "../Tester/Page/Profile/Profile";
+import Activity from "../Tester/Page/Activity/Activity";
 const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
@@ -61,7 +68,7 @@ const router = createBrowserRouter([
 					{
 						name: "teams",
 						path: "teams",
-						element: <ListBug></ListBug>,
+						element: <Team></Team>,
 					},
 					{
 						name: "bug-create",
@@ -77,11 +84,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "profile",
-				element: <Home />,
+				element: <Profile />,
 			},
 			{
 				path: "activities",
-				element: <Home />,
+				element: <Activity />,
 			},
 			{
 				path: "your-devices",
@@ -102,6 +109,10 @@ const router = createBrowserRouter([
 			{
 				path: "academy",
 				element: <Academy />,
+			},
+			{
+				path: "notification",
+				element: <Notification />,
 			},
 		],
 	},
