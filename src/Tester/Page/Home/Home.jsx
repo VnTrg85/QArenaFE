@@ -4,7 +4,7 @@ import ArticleItem from "../../Component/HomeComps/ArticleItem/ArticleItem";
 import ArticleDetail from "../../Component/ArticleDetail/ArticleDetail";
 import { useUser } from "../../../Context/AuthContext";
 import { useEffect, useMemo, useState } from "react";
-import { get_test_projects } from "../../Service/TestProject";
+import { get_test_projects } from "../../../Services/TestProjectService";
 import { useDispatch, useSelector } from "react-redux";
 import { addNotification } from "../../../Store/notificationSlice";
 import useToast from "../../../CustomHook/useToast";
@@ -48,6 +48,7 @@ function Home() {
 	};
 
 	const handleClickOnArticle = item => {
+		console.log(1);
 		setSelectedArticle(item);
 	};
 
@@ -103,7 +104,9 @@ function Home() {
 							key={item.id}
 							project={item}
 							active={selectedArticle?.id == item.id ? true : false}
-							onClick={() => handleClickOnArticle(item)}
+							onClick={() => {
+								handleClickOnArticle(item);
+							}}
 						></ArticleItem>
 					))}
 					{/* <ArticleItem active="true"></ArticleItem>
@@ -114,7 +117,7 @@ function Home() {
 					<ArticleItem></ArticleItem> */}
 				</div>
 				<div className={cx("home-container-content-right")}>
-					<ArticleDetail project={selectedArticle?.testProject}></ArticleDetail>
+					<ArticleDetail testUserProject={selectedArticle} project={selectedArticle?.testProject}></ArticleDetail>
 				</div>
 			</div>
 		</div>

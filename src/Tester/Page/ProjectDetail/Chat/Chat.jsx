@@ -1,9 +1,50 @@
 import styles from "./Chat.module.css";
 import classname from "classnames/bind";
-
+import ChatSocket from "../../../../Socket/ChatSocket";
+import { useUser } from "../../../../Context/AuthContext";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import ProjectChatSocket from "../../../../Socket/ProjectChatSocket";
+import { get_message_by_project } from "../../../../Services/MessageService";
+import useToast from "../../../../CustomHook/useToast";
+import { formatDateTimeFunc } from "../../../../Utils/formatTime";
 const cx = classname.bind(styles);
-
 function Chat() {
+	const [input, setInput] = useState("");
+	const { getUserValue } = useUser();
+	const location = useLocation();
+	const userId = getUserValue().id;
+	const [messages, setMessages] = useState([]);
+	const projectId = location.pathname.split("/")[3];
+	const { showToast } = useToast();
+	const { sendMessageProject } = ProjectChatSocket({
+		projectId,
+		onMessage: msg => setMessages(prev => [...prev, msg]),
+	});
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await get_message_by_project(projectId);
+			if (res.status == "success") {
+				setMessages(res.data);
+			} else {
+				showToast({
+					message: "Something went wrong",
+					type: "error",
+				});
+			}
+		};
+		fetchData();
+	}, []);
+	const handleSend = () => {
+		sendMessageProject({
+			content: input,
+			user: { id: userId },
+			testProjectId: projectId,
+			time_created: Date.now(),
+		});
+		setInput("");
+	};
 	return (
 		<div className={cx("chat-ctn")}>
 			<div class={cx("chat-header")}>
@@ -15,85 +56,35 @@ function Chat() {
 			</div>
 			<h3 className={cx("chat-label")}>Chat</h3>
 			<div class={cx("chat-box")}>
-				<div class={cx("message")}>
-					<div>
-						<img
-							src="https://static.vecteezy.com/system/resources/thumbnails/020/271/547/small/portrait-of-a-beautiful-asian-woman-full-face-portrait-in-flat-style-avatar-female-diversity-free-vector.jpg"
-							alt="User"
-						/>
-						<p class={cx("user-name")}>
-							11 months ago by <strong>Victor (TL)</strong>
-						</p>
+				{messages?.map(item => (
+					<div class={cx("message")}>
+						<div>
+							<img
+								src={
+									item.user.avatar ||
+									"https://static.vecteezy.com/system/resources/thumbnails/020/271/547/small/portrait-of-a-beautiful-asian-woman-full-face-portrait-in-flat-style-avatar-female-diversity-free-vector.jpg"
+								}
+								alt="User"
+							/>
+							<p class={cx("user-name")}>
+								{formatDateTimeFunc(item.time_created)} <strong>{item.user.name}</strong>
+							</p>
+						</div>
+						<p class={cx("message-text")}>{item.content}</p>
 					</div>
-					<p class={cx("message-text")}>@angelina_chanysheva You should delete the duplicated bugs.</p>
-				</div>
-
-				<div class={cx("message")}>
-					<div>
-						<img
-							src="https://static.vecteezy.com/system/resources/thumbnails/020/271/547/small/portrait-of-a-beautiful-asian-woman-full-face-portrait-in-flat-style-avatar-female-diversity-free-vector.jpg"
-							alt="User"
-						/>
-						<p class={cx("user-name")}>
-							11 months ago by <strong>Victor (TL)</strong>
-						</p>
-					</div>
-					<p class={cx("message-text")}>
-						@teamleader Please note, by some bug of the test io platform I can see 4 duplication of (Safari Mac OS 14.4.1) Error occurs
-						when clicking "Shop Now" button after selecting and comparing options.
-					</p>
-				</div>
-
-				<div class={cx("message")}>
-					<div>
-						<img
-							src="https://static.vecteezy.com/system/resources/thumbnails/020/271/547/small/portrait-of-a-beautiful-asian-woman-full-face-portrait-in-flat-style-avatar-female-diversity-free-vector.jpg"
-							alt="User"
-						/>
-						<p class={cx("user-name")}>
-							11 months ago by <strong>Victor (TL)</strong>
-						</p>
-					</div>
-					<p class={cx("message-text")}>
-						@teamleader Please note, by some bug of the test io platform I can see 4 duplication of (Safari Mac OS 14.4.1) Error occurs
-						when clicking "Shop Now" button after selecting and comparing options.
-					</p>
-				</div>
-				<div class={cx("message")}>
-					<div>
-						<img
-							src="https://static.vecteezy.com/system/resources/thumbnails/020/271/547/small/portrait-of-a-beautiful-asian-woman-full-face-portrait-in-flat-style-avatar-female-diversity-free-vector.jpg"
-							alt="User"
-						/>
-						<p class={cx("user-name")}>
-							11 months ago by <strong>Victor (TL)</strong>
-						</p>
-					</div>
-					<p class={cx("message-text")}>
-						@teamleader Please note, by some bug of the test io platform I can see 4 duplication of (Safari Mac OS 14.4.1) Error occurs
-						when clicking "Shop Now" button after selecting and comparing options.
-					</p>
-				</div>
-				<div class={cx("message")}>
-					<div>
-						<img
-							src="https://static.vecteezy.com/system/resources/thumbnails/020/271/547/small/portrait-of-a-beautiful-asian-woman-full-face-portrait-in-flat-style-avatar-female-diversity-free-vector.jpg"
-							alt="User"
-						/>
-						<p class={cx("user-name")}>
-							11 months ago by <strong>Victor (TL)</strong>
-						</p>
-					</div>
-					<p class={cx("message-text")}>
-						@teamleader Please note, by some bug of the test io platform I can see 4 duplication of (Safari Mac OS 14.4.1) Error occurs
-						when clicking "Shop Now" button after selecting and comparing options.
-					</p>
-				</div>
+				))}
 			</div>
 
 			<div class={cx("chat-input")}>
-				<input type="text" placeholder="Send a message to the chat" />
-				<div class={cx("send-btn")}>
+				<input
+					onInput={e => {
+						setInput(e.target.value);
+					}}
+					value={input}
+					type="text"
+					placeholder="Send a message to the chat"
+				/>
+				<div onClick={handleSend} class={cx("send-btn")}>
 					<img src="/icons/i-send.svg"></img>
 				</div>
 			</div>

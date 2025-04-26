@@ -3,7 +3,7 @@ import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useEffect, useRef } from "react";
 
-const ChatSocket = ({ bugId, userId, onMessage, onNotify }) => {
+const NotificationSocket = ({ userId, onNotify }) => {
 	const clientRef = useRef(null);
 
 	useEffect(() => {
@@ -14,10 +14,9 @@ const ChatSocket = ({ bugId, userId, onMessage, onNotify }) => {
 			onConnect: () => {
 				console.log("Connected!");
 
-				// Subscribe nhận tin nhắn trong bug này
-				client.subscribe(`/topic/bug-report/${bugId}`, message => {
-					const msg = JSON.parse(message.body);
-					onMessage(msg); // callback nhận tin
+				// Subscribe nhận thông báo riêng
+				client.subscribe(`/user/${userId}/notify`, message => {
+					onNotify(message.body); // thông báo
 				});
 			},
 		});
@@ -30,16 +29,7 @@ const ChatSocket = ({ bugId, userId, onMessage, onNotify }) => {
 				clientRef.current.deactivate();
 			}
 		};
-	}, [bugId, userId]);
-
-	const sendMessageBug = message => {
-		clientRef.current?.publish({
-			destination: "/app/bug/chat.send",
-			body: JSON.stringify(message),
-		});
-	};
-
-	return { sendMessageBug };
+	}, [userId]);
 };
 
-export default ChatSocket;
+export default NotificationSocket;

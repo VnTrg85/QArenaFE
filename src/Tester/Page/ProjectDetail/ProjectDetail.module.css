@@ -19,6 +19,17 @@
 	align-items: center;
 	justify-content: space-between;
 }
+.project-header-label-ctn {
+	display: flex;
+	align-items: center;
+}
+.end-at-label {
+	font-size: 10px;
+	margin-left: 5px;
+	color: var(--primary-color);
+	border-left: 2px solid var(--primary-color);
+	padding: 0 5px;
+}
 .progress-bar-ctn {
 	flex: 1;
 	display: flex;

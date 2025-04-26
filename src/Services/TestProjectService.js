@@ -44,3 +44,25 @@ export const get_test_project_detail = async testProjectId => {
 		}
 	}
 };
+
+export const update_testproject_user_status = async data => {
+	try {
+		const res = await axios.post(`${base_url_api}/testProjectUser/update`, data, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("access_token")}`, // gửi token
+				Email: JSON.parse(localStorage.getItem("user")).email,
+			},
+		});
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			console.error("Unexpected error:", error);
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};

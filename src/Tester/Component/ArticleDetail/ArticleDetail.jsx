@@ -3,16 +3,21 @@ import styles from "./ArticleDetail.module.css";
 import classname from "classnames/bind";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { get_test_project_detail } from "../../Service/TestProject";
+import { get_test_project_detail, update_testproject_user_status } from "../../../Services/TestProjectService";
+import { useDispatch } from "react-redux";
 import useToast from "../../../CustomHook/useToast";
+import Modal from "../Modal/Modal";
+import { setCurrentProject } from "../../../Store/testProjectSlice";
 const cx = classname.bind(styles);
-function ArticleDetail({ project }) {
+function ArticleDetail({ testUserProject, project }) {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [article, setArticle] = useState(project);
 	const { showToast } = useToast();
 	const [selectedFeature, setSelectedFeature] = useState(null);
+	const [isOpenConfirmPopup, setIsOpenConfirmPopup] = useState(false);
+	const dispatch = useDispatch();
 	useEffect(() => {
 		setArticle(project);
 	}, [project]);
@@ -23,6 +28,8 @@ function ArticleDetail({ project }) {
 				const res = await get_test_project_detail(id);
 				if (res.status == "success") {
 					setArticle(res.data);
+					console.log(res.data);
+					dispatch(setCurrentProject(res.data));
 				} else {
 					showToast({
 						message: res.data || "Something went wrong",
@@ -35,7 +42,26 @@ function ArticleDetail({ project }) {
 	}, [id]);
 
 	const handleNavigateToBugDetail = () => {
-		navigate(`/dGVzdGVy/project/${article.id}`);
+		if (testUserProject?.status == "Opening") setIsOpenConfirmPopup(true);
+		else {
+			navigate(`/dGVzdGVy/project/${article.id}`);
+		}
+	};
+
+	const handleConfirmProject = async () => {
+		const data = {
+			id: testUserProject.id,
+			status: "Doing",
+		};
+		const res = await update_testproject_user_status(data);
+		if (res.status == "success") {
+			navigate(`/dGVzdGVy/project/${article.id}`);
+		} else {
+			showToast({
+				message: "Something went wrong",
+				type: "error",
+			});
+		}
 	};
 
 	const handleOpenReadMore = item => {
@@ -52,7 +78,9 @@ function ArticleDetail({ project }) {
 							<div className={cx("container-header")}>
 								<h1>{article?.projectName}</h1>
 								<div onClick={handleNavigateToBugDetail} className={cx("test-btn")}>
-									<span>Test now</span>
+									{testUserProject?.status == "Opening" && <span>Test now</span>}
+									{testUserProject?.status == "Doing" && <span>Open</span>}
+									{testUserProject?.status == "Done" && <span>Open</span>}
 									<img src="/icons/i-chevron-white.svg"></img>
 								</div>
 							</div>
@@ -278,6 +306,20 @@ function ArticleDetail({ project }) {
 						</div>
 					)}
 				</div>
+			)}
+			{isOpenConfirmPopup && (
+				<Modal>
+					<h3 className={cx("confirm-label")}>Confirm</h3>
+					<div className={cx("confirm-title")}>Do you read carefully and accept the project?</div>
+					<div className={cx("confirm-btn")}>
+						<button onClick={() => setIsOpenConfirmPopup(false)} className={cx("confirm-btn-cancle")}>
+							Cancle
+						</button>
+						<button onClick={handleConfirmProject} className={cx("confirm-btn-accept")}>
+							Confirm
+						</button>
+					</div>
+				</Modal>
 			)}
 		</div>
 	);
