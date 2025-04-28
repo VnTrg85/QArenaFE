@@ -83,6 +83,7 @@ const AuthMiddleware = ({ validRoutes }) => {
 			return (
 				<DefaultLayout>
 					<Outlet />
+					<ToastComponent></ToastComponent>
 				</DefaultLayout>
 			);
 		} else if (getUserValue().role == "2" && currentPath.includes("Q3VzdG9tZXI=")) {
