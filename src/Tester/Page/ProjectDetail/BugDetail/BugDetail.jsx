@@ -24,7 +24,7 @@ function BugDetail() {
 	const { sendMessageBug } = ChatSocket({
 		bugId,
 		userId,
-		onMessage: msg => setMessages(prev => [...prev, msg]),
+		onMessage: msg => setMessages(prev => [msg, ...prev]),
 		onNotify: msg => alert(msg),
 	});
 	const handleSend = () => {
@@ -59,7 +59,7 @@ function BugDetail() {
 		const fetchMessage = async () => {
 			const res = await get_message_by_bug_report(bugId);
 			if (res.status == "success") {
-				setMessages(res.data);
+				setMessages(res.data.reverse());
 			} else {
 				showToast({
 					message: "Something went wrong",
@@ -208,6 +208,15 @@ function BugDetail() {
 								))}
 							</ol>
 						</div>
+						{getUserValue().role == "3" && (
+							<div className={cx("action-test-leader")}>
+								<span>Action: </span>
+								<div>
+									<span className={cx("action-test-leader-btn", "reject")}>Reject</span>
+									<span className={cx("action-test-leader-btn", "accept")}>Accept</span>
+								</div>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

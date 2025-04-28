@@ -1,7 +1,7 @@
 import styles from "./ProjectDetail.module.css";
 import classname from "classnames/bind";
 import { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Modal from "../../Component/Modal/Modal";
 import { create_session, end_session, get_session_doing } from "../../../Services/Session";
 import { useUser } from "../../../Context/AuthContext";
@@ -12,6 +12,9 @@ import { SubmitContext } from "../../Context/SubmitContext.jsx";
 import { addNotification, removeNotification } from "../../../Store/notificationSlice.js";
 import { current } from "@reduxjs/toolkit";
 import { formatDate, formatDateTimeFunc } from "../../../Utils/formatTime.js";
+import { setCurrentProject } from "../../../Store/testProjectSlice";
+import { get_test_project_detail } from "../../../Services/TestProjectService.js";
+
 const cx = classname.bind(styles);
 function ProjectDetail() {
 	const location = useLocation();
@@ -19,6 +22,7 @@ function ProjectDetail() {
 	const { getUserValue } = useUser();
 	const { showToast } = useToast();
 	const dispatch = useDispatch();
+	const { id } = useParams();
 	//state
 	const [isReady, setIsReady] = useState(false);
 	const [isOpenSessionPopup, setIsOpenSessionPopup] = useState(false);
@@ -41,6 +45,22 @@ function ProjectDetail() {
 	];
 	const sessions = useSelector(state => state.session);
 	//Side effect
+	useEffect(() => {
+		if (id) {
+			const fetchData = async () => {
+				const res = await get_test_project_detail(id);
+				if (res.status == "success") {
+					dispatch(setCurrentProject(res.data));
+				} else {
+					showToast({
+						message: res.data || "Something went wrong",
+						type: "error",
+					});
+				}
+			};
+			fetchData();
+		}
+	}, [id]);
 	useEffect(() => {
 		const endSessionFuc = async () => {
 			await handleEndSession();
