@@ -6,7 +6,6 @@ import ProjectList from "../../Component/ProjectList/ProjectList";
 
 const Dashboard = () => {
 	return (
-		<DashboardLayout>
 			<div className="dashboard">
 				<div className="top-boxes">
 					<div className="summary-card">
@@ -35,7 +34,6 @@ const Dashboard = () => {
 				</div>
 				<ProjectList />
 			</div>
-		</DashboardLayout>
 	);
 };
 

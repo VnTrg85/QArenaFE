@@ -1,14 +1,28 @@
 .dashboard-layout {
-    display: flex;
-    height: 100vh;
-    background: #f3f4f8;
-    margin-top: 50px;
-    width: 100%;
-  }
-  
-  .main-view {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar {
+  width: 240px;
+  background: #fff;
+  border-right: 1px solid #eee;
+  height: calc(100vh - 70px);
+  top: 70px;
+}
+
+.main-view {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  margin-left: 240px;
+}

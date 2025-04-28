@@ -251,6 +251,7 @@ const Login = () => {
 				message: "Login successfully",
 				type: "success",
 			});
+			console.log(res.data.role)
 			if (res.data.role == "tester") {
 				navigate("/dGVzdGVy");
 			} else if (res.data.role == "customer") {

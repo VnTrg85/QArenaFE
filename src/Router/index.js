@@ -13,6 +13,9 @@ import ArticleDetail from "../Tester/Component/ArticleDetail/ArticleDetail";
 import ListBug from "../Tester/Page/ProjectDetail/ListBug/ListBug";
 import Chat from "../Tester/Page/ProjectDetail/Chat/Chat";
 import CreateBugReport from "../Tester/Page/CreateBugReport/CreateBugReport";
+import DashboardLayout from "../Customer/Layout/Dashboard/DashboardLayout";
+import ProjectDetailPage from "../Customer/Page/ProjectDetail/ProjectDetailPage";
+import ProjectModal from "../Customer/Component/ProjectModal/ProjectModal";
 const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
@@ -111,11 +114,23 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "",
-				element: <Dashboard />,
+				element: <DashboardLayout />,
 				children: [
+					{
+						path: "",
+						element: <Dashboard />,
+					},
 					{
 						path: "project",
 						element: <ProjectPage />,
+					},
+					{
+						path: "project/:id", 
+						element:<ProjectDetailPage/>,
+					},
+					{
+						path: "project/create", 
+						element:<ProjectModal/>,
 					},
 				],
 			},
