@@ -210,12 +210,15 @@ function ArticleDetail({ testUserProject, project }) {
 											<div className={cx("feature-section")}>
 												<h2>BUG TYPES</h2>
 												<div className={cx("bug-types")}>
-													{item.bugType.map(val => (
-														<div className={cx("bug-item")} key={val.id}>
-															<img src={val.icon_link}></img>
-															<span> {val.name}</span>
-														</div>
-													))}
+													<div className={cx("bug-item")}>
+														<span className={cx("triangle", "functional")}></span> Functional
+													</div>
+													<div className={cx("bug-item")}>
+														<span className={cx("triangle", "content")}></span> Content
+													</div>
+													<div className={cx("bug-item")}>
+														<span className={cx("triangle", "visual")}></span> Visual
+													</div>
 												</div>
 											</div>
 
@@ -251,6 +254,12 @@ function ArticleDetail({ testUserProject, project }) {
 					</div>
 					{location.pathname.includes("project") && (
 						<div className={cx("container-right")}>
+							<div className={cx("session-section")}>
+								<h3>Start a session</h3>
+								<div>
+									<img src="/icons/i-session.svg"></img>
+								</div>
+							</div>
 							<div className={cx("details")}>
 								<div className={cx("box")}>
 									<h2>Payout</h2>
@@ -277,7 +286,7 @@ function ArticleDetail({ testUserProject, project }) {
 									</table>
 								</div>
 							</div>
-							{/* <div className={cx("device-ctn")}>
+							<div className={cx("device-ctn")}>
 								<h5>Requested OS</h5>
 								<div className={cx("device-item")}>
 									<img src="/icons/i-computer.svg"></img>
@@ -289,8 +298,8 @@ function ArticleDetail({ testUserProject, project }) {
 										</div>
 									</div>
 								</div>
-							</div> */}
-							{/* <div className={cx("device-ctn")}>
+							</div>
+							<div className={cx("device-ctn")}>
 								<h5>Available for reproduction</h5>
 								<div className={cx("device-item")}>
 									<img src="/icons/i-mac.svg"></img>
@@ -302,10 +311,24 @@ function ArticleDetail({ testUserProject, project }) {
 										</div>
 									</div>
 								</div>
-							</div> */}
+							</div>
 						</div>
 					)}
 				</div>
+			)}
+			{isOpenConfirmPopup && (
+				<Modal>
+					<h3 className={cx("confirm-label")}>Confirm</h3>
+					<div className={cx("confirm-title")}>Do you read carefully and accept the project?</div>
+					<div className={cx("confirm-btn")}>
+						<button onClick={() => setIsOpenConfirmPopup(false)} className={cx("confirm-btn-cancle")}>
+							Cancle
+						</button>
+						<button onClick={handleConfirmProject} className={cx("confirm-btn-accept")}>
+							Confirm
+						</button>
+					</div>
+				</Modal>
 			)}
 			{isOpenConfirmPopup && (
 				<Modal>
