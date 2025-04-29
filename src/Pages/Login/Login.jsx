@@ -252,7 +252,12 @@ const Login = () => {
 				message: "Login successfully",
 				type: "success",
 			});
-			navigate("/dGVzdGVy");
+			console.log(res.data.role)
+			if (res.data.role == "tester") {
+				navigate("/dGVzdGVy");
+			} else if (res.data.role == "customer") {
+				navigate("/Q3VzdG9tZXI=");
+			}
 		} else {
 			showToast({
 				message: res.data || "Some thing went wrong",
