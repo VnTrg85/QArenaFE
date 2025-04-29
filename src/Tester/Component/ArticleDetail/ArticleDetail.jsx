@@ -254,12 +254,6 @@ function ArticleDetail({ testUserProject, project }) {
 					</div>
 					{location.pathname.includes("project") && (
 						<div className={cx("container-right")}>
-							<div className={cx("session-section")}>
-								<h3>Start a session</h3>
-								<div>
-									<img src="/icons/i-session.svg"></img>
-								</div>
-							</div>
 							<div className={cx("details")}>
 								<div className={cx("box")}>
 									<h2>Payout</h2>

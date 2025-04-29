@@ -235,10 +235,6 @@ const Login = () => {
 	const handleSignin = async () => {
 		const res = await login({ email: data.email, password: data.password });
 		if (res.status == "success") {
-			showToast({
-				message: "Login successfully",
-				type: res.status,
-			});
 			localStorage.setItem("access_token", res.data.token);
 			localStorage.setItem(
 				"user",

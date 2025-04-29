@@ -255,7 +255,9 @@ td {
 	color: white;
 	cursor: pointer;
 	opacity: 1 !important;
+	pointer-events: all !important;
 }
+
 .button:hover {
 	background-color: #1d3e57;
 }
