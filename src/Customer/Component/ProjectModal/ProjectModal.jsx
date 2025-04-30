@@ -55,33 +55,12 @@ const ProjectModal = () => {
         initializeUser();
   }, []);
 
-  const addProject = async (newProject) => {
-      try {
-        if (!userId) {
-          console.error("No user ID available!");
-          return;
-        }
-
-        console.log(formData);
-        
-        const formattedData = {
-          ...formData,
-          platform: formData.platform.split(',').map(item => item.trim()),
-          language: formData.language.split(',').map(item => item.trim()),
-        };
-        const completeProject = {
-          ...formattedData,
-          userId: userId,
-        };
-    
-        const res = await createTestProject(completeProject);
-    
-        console.log("Create project response:", res);
-      } catch (error) {
-        console.error("Error creating project:", error);
-      }
-      navigate(`/Q3VzdG9tZXI=/project`);
+  const stripHtml = (html) => {
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
   };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -92,14 +71,46 @@ const ProjectModal = () => {
   };
   
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    const requiredFields = ['projectName', 'description', 'outScope', 'goal', 'additionalRequirement', 'link', 'platform', 'language'];
+    for (let field of requiredFields) {
+      const value = stripHtml(formData[field] || '');
+      if (!value.trim()) {
+        alert(`Vui lòng nhập: ${field}`);
+        return;
+      }
+    }
+  
+    if (!userId) {
+      alert("Không xác định được người dùng!");
+      return;
+    }
   
     const formattedData = {
       ...formData,
       platform: formData.platform.split(',').map(item => item.trim()),
       language: formData.language.split(',').map(item => item.trim()),
     };
+  
+    const completeProject = {
+      ...formattedData,
+      userId: userId,
+      description: stripHtml(formattedData.description),
+      outScope: stripHtml(formattedData.outScope),
+      goal: stripHtml(formattedData.goal),
+      additionalRequirement: stripHtml(formattedData.additionalRequirement),
+    };
+  
+    try {
+      const res = await createTestProject(completeProject);
+      console.log("Create project response:", res);
+      navigate(`/Q3VzdG9tZXI=/project`);
+    } catch (error) {
+      console.error("Error creating project:", error);
+      alert("Tạo project thất bại!");
+    }
   };
 
   const modules = {
@@ -141,7 +152,7 @@ const ProjectModal = () => {
           <p><strong>Link: </strong></p>
           <input type="url" name="link" placeholder="Link:" value={formData.link} onChange={handleChange} />
           <div className="modal-buttons">
-            <button type="submit" onClick={addProject}>Save</button>
+            <button type="submit">Save</button>
             <button type="button" onClick={() => navigate(`/Q3VzdG9tZXI=/project`)}>Cancel</button>
           </div>
         </form>

@@ -10,6 +10,7 @@ const ProjectPage = () => {
   const [projects, setProjects] = useState([]);
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("all");
 
   const handleViewDetail = (projectId) => {
     console.log("Navigating to project detail with id:", projectId);
@@ -40,6 +41,10 @@ const ProjectPage = () => {
     initializeUser();
   }, []);
 
+  const filteredProjects = activeTab === "all"
+  ? projects
+  : projects.filter(project => project.status?.toLowerCase() === activeTab);
+
   const fetchProjects = async (id) => {
     try {
       const res = await getTestProjectsByUser(id);
@@ -54,40 +59,25 @@ const ProjectPage = () => {
     }
   };
 
-  const addProject = async (newProject) => {
-    try {
-      if (!userId) {
-        console.error("No user ID available!");
-        return;
-      }
-  
-      const completeProject = {
-        ...newProject,
-        userId: userId,
-      };
-  
-      const res = await createTestProject(completeProject);
-  
-      console.log("Create project response:", res);
-  
-      if (res?.status === "success") {
-        fetchProjects(userId);
-      } else {
-        console.error("Failed to create project:", res?.data || res);
-      }
-    } catch (error) {
-      console.error("Error creating project:", error);
-    }
-  };
-
   return (
     <div className="project-page">
       <div className="project-header">
         <h2>Danh sách Project</h2>
         <button onClick={() => navigate(`/Q3VzdG9tZXI=/project/create`)}>+ Thêm mới</button>
       </div>
+      <div className="project-tabs-menu">
+        {["all", "pending", "doing", "done"].map(status => (
+          <button
+            key={status}
+            className={activeTab === status ? "active" : ""}
+            onClick={() => setActiveTab(status)}
+          >
+            {status === "all" ? "Tất cả" : status.charAt(0).toUpperCase() + status.slice(1)}
+          </button>
+        ))}
+      </div>
       <div className="project-grid">
-        {projects.map(project => (
+        {filteredProjects.map(project => (
           <ProjectCard key={project.id} project={project} onViewDetail={() => handleViewDetail(project.id)} />
         ))}
       </div>

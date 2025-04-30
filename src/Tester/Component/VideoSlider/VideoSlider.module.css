@@ -1,0 +1,58 @@
+/* Tổng thể container của slider */
+.sliderContainer {
+	position: relative;
+	width: 100%;
+	border-radius: 12px;
+	overflow: hidden;
+	background-color: #fff; /* Nền sáng */
+	border: 1px solid #f0f0f0; /* Viền nhẹ */
+}
+
+/* Wrapper cho video */
+.videoWrapper {
+	width: 100%;
+	height: auto;
+	padding: 0;
+}
+
+/* Phong cách cho video */
+.video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 12px;
+	transition: transform 0.5s ease; /* Hiệu ứng phóng to nhẹ khi hover */
+}
+
+.sliderContainer:hover .navBtn {
+	visibility: visible !important;
+}
+/* Nút điều hướng chung */
+.navBtn {
+	visibility: hidden;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: rgba(0, 0, 0, 0.3); /* Nền tối mờ */
+	color: white;
+	border: none;
+	padding: 5px;
+	padding: 4px 8px;
+	cursor: pointer;
+	z-index: 10;
+	border-radius: 50%;
+	transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.navBtn:hover {
+	opacity: 0.8;
+}
+
+/* Nút 'Previous' */
+.prevBtn {
+	left: 10px;
+}
+
+/* Nút 'Next' */
+.nextBtn {
+	right: 10px;
+}

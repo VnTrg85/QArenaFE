@@ -1,0 +1,54 @@
+.bug-list-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .bug-list-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .bug-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .bug-actions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+  }
+  
+  .bug-actions button:hover {
+    background-color: #0056b3;
+  }
+  
+  .bug-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .bug-table th, .bug-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .bug-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .bug-table a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  

@@ -1,0 +1,16 @@
+.payout-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    width: 200px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payout-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+  

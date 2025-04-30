@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { v4 as uuidv4 } from "uuid";
 
 const toastStyles = {
 	success: {
@@ -48,17 +49,17 @@ const toastStyles = {
 		letterSpacing: "0.5px",
 	},
 };
-
 const useToast = () => {
 	const showToast = useCallback(({ message, type = "info" }) => {
 		toast[type](message, {
 			position: "top-right",
-			autoClose: 4000,
+			autoClose: 3000,
 			hideProgressBar: true,
 			closeOnClick: true,
 			pauseOnHover: true,
 			draggable: false,
 			style: toastStyles[type] || {},
+			toastId: uuidv4(),
 		});
 	}, []);
 

@@ -16,6 +16,14 @@ import CreateBugReport from "../Tester/Page/CreateBugReport/CreateBugReport";
 import DashboardLayout from "../Customer/Layout/Dashboard/DashboardLayout";
 import ProjectDetailPage from "../Customer/Page/ProjectDetail/ProjectDetailPage";
 import ProjectModal from "../Customer/Component/ProjectModal/ProjectModal";
+import DeviceManager from "../Tester/Page/DeviceManager/DeviceManager";
+import SessionManager from "../Tester/Page/ProjectDetail/Session/SessionManager";
+import BugDetail from "../Tester/Page/ProjectDetail/BugDetail/BugDetail";
+import Notification from "../Tester/Page/Notification/Notification";
+import Team from "../Tester/Page/ProjectDetail/Team/Team";
+import Profile from "../Tester/Page/Profile/Profile";
+import Activity from "../Tester/Page/Activity/Activity";
+import ListBugPage from "../Customer/Page/ListBug/ListBugPage";
 const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
@@ -37,14 +45,14 @@ const router = createBrowserRouter([
 				element: <ProjectDetail />,
 				children: [
 					{
-						name: "/overview",
+						name: "overview",
 						path: "",
 						element: <ArticleDetail></ArticleDetail>,
 					},
 					{
 						name: "session",
 						path: "session",
-						element: <ArticleDetail></ArticleDetail>,
+						element: <SessionManager></SessionManager>,
 					},
 					{
 						name: "bugs",
@@ -64,12 +72,17 @@ const router = createBrowserRouter([
 					{
 						name: "teams",
 						path: "teams",
-						element: <ListBug></ListBug>,
+						element: <Team></Team>,
 					},
 					{
 						name: "bug-create",
 						path: "bug/create",
 						element: <CreateBugReport></CreateBugReport>,
+					},
+					{
+						name: "bug-detail",
+						path: "bugs/:id",
+						element: <BugDetail></BugDetail>,
 					},
 				],
 			},
@@ -80,15 +93,15 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "profile",
-				element: <Home />,
+				element: <Profile />,
 			},
 			{
 				path: "activities",
-				element: <Home />,
+				element: <Activity />,
 			},
 			{
 				path: "your-devices",
-				element: <Home />,
+				element: <DeviceManager />,
 			},
 			{
 				path: "billing",
@@ -105,6 +118,10 @@ const router = createBrowserRouter([
 			{
 				path: "academy",
 				element: <Academy />,
+			},
+			{
+				path: "notification",
+				element: <Notification />,
 			},
 		],
 	},
@@ -131,6 +148,10 @@ const router = createBrowserRouter([
 					{
 						path: "project/create", 
 						element:<ProjectModal/>,
+					},
+					{
+						path: "project/list-bug/:projectId", 
+						element:<ListBugPage/>,
 					},
 				],
 			},

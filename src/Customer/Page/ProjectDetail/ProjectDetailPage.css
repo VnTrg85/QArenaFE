@@ -1,69 +1,156 @@
-.project-detail-page {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.project-detail-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  margin-top: -10px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.project-title {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.project-section {
+  margin-bottom: 25px;
+}
+
+.project-section h3 {
+  font-size: 18px;
+  color: #34495e;
+  margin-bottom: 8px;
+}
+
+.project-section p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.project-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.info-item {
+  font-size: 15px;
+  color: #333;
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  text-transform: capitalize;
+}
+
+.status.Done {
+  background-color: #2ecc71;
+}
+
+.status.Pending {
+  background-color: #f39c12;
+}
+
+.loader,
+.error {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 18px;
+  color: #666;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  text-align: center;
+  color: #555;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.testfeature-section {
+  margin-top: 40px;
+}
+
+.testfeature-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.testfeature-header h2 {
+  margin: 0;
+}
+
+.testfeature-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 6px 16px;
+  border: none;
+  color: white;
+  background-color: #2ecc71;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+
+  &.active {
+    background-color: #1890ff;
+    color: white;
   }
-  
-  .project-detail {
-    margin-bottom: 30px;
+
+  &:hover {
+    background-color: #d9d9d9;
   }
-  
-  .project-detail h2 {
-    font-size: 2rem;
-    color: #333;
-  }
-  
-  .project-detail p {
-    font-size: 1rem;
-    color: #666;
-  }
-  
-  .bug-reports-section {
-    margin-top: 20px;
-  }
-  
-  .bug-report-list {
-    margin-top: 20px;
-  }
-  
-  .bug-report-item {
-    margin-bottom: 15px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .bug-report-summary {
-    cursor: pointer;
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .bug-report-summary:hover {
-    background-color: #e1e1e1;
-  }
-  
-  .bug-report-detail {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .bug-report-detail p {
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
-  .bug-report-item h4 {
-    font-size: 1.2rem;
-    margin: 0;
-    color: #333;
-  }
-  
+}
+.list-bug-button-container {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.list-bug-button {
+  padding: 10px 18px;
+  font-size: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.list-bug-button:hover {
+  background-color: #218838;
+}

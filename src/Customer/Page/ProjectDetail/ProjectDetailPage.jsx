@@ -1,94 +1,188 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getTestProjectDetail } from '../../Service/TestProject/index';
-import { getBugReportsByProject } from '../../Service/BugReport/index';
 import './ProjectDetailPage.css';
+import { createTestFeature } from '../../Service/TestProject/index';
+import AddTestFeatureModal from '../../Component/TestFeature/TestfeatureModal/AddTestFeatureModal';
+import TestFeatureCard from '../../Component/TestFeature/TestfeatureCard/TestFeature-Card';
+import { getPayoutBugByProjectId, createPayoutBug } from '../../Service/TestProject/index';
+import PayoutBugCard from '../../Component/PayoutBug/PayoutBugCard/PayoutBugCard';
+import PayoutBugModal from '../../Component/PayoutBug/PayoutBugModal/PayoutBugModal';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectDetailPage = () => {
   const location = useLocation();
   const [projectId,setProjectId] = useState( location.pathname.split("/")[3])
-  
-  console.log(projectId);
-  
   const [project, setProject] = useState(null);
-  const [bugReports, setBugReports] = useState([]);
-  const [expandedBug, setExpandedBug] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [features, setFeatures] = useState([]);
+  const [payouts, setPayouts] = useState([]);
+  const [showPayoutModal, setShowPayoutModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjectDetail = async () => {
       try {
+        console.log("Fetching detail for ID:", projectId);
         const res = await getTestProjectDetail(projectId);
+        console.log("Response from API:", res);
         if (res.status === 'success') {
           setProject(res.data);
+          
         } else {
           console.error('Failed to fetch project details');
         }
       } catch (error) {
         console.error('Error fetching project details:', error);
+      } finally {
+        setLoading(false);
       }
     };
-
-    const fetchBugReports = async () => {
-      try {
-        const res = await getBugReportsByProject(projectId);
-        setBugReports(res);
-      } catch (error) {
-        console.error('Error fetching bug reports:', error);
+    const fetchPayouts = async () => {
+      const res = await getPayoutBugByProjectId(projectId);
+      if (res.status === 'success') {
+        setPayouts(res.data);
       }
     };
-
+    fetchPayouts();
     fetchProjectDetail();
-    fetchBugReports();
   }, [projectId]);
 
-  const toggleBugDetail = (bugId) => {
-    if (expandedBug === bugId) {
-      setExpandedBug(null);
+  const handleAddFeature = async (featureData) => {
+    const payload = { ...featureData, testProjectId: Number(projectId) };
+    const res = await createTestFeature(payload);
+    if (res.status === 'success') {
+      setProject((prev) => ({
+        ...prev,
+        testFeatures: [...(prev.testFeatures || []), res.data],
+      }));
     } else {
-      setExpandedBug(bugId);
+      alert("Thêm mới thất bại: " + res.data);
     }
   };
 
+  const handleAddPayout = async (payoutData) => {
+    const res = await createPayoutBug(payoutData);
+    if (res.status === 'success') {
+      setPayouts(prev => [...prev, res.data]);
+    } else {
+      alert("Thêm payout thất bại: " + res.data);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p>Đang tải dữ liệu dự án...</p>
+      </div>
+    );
+  }
+  if (!project) return <div className="error">Không tìm thấy thông tin dự án.</div>;
   return (
-    <div className="project-detail-page">
-      {project ? (
-        <div className="project-detail">
-          <h2>{project.projectName}</h2>
-          <p><strong>Description:</strong> {project.description}</p>
-          <p><strong>Goal:</strong> <a href={project.goal} target="_blank" rel="noopener noreferrer">View Goal</a></p>
-          <p><strong>Out of Scope:</strong> {project.outScope}</p>
+    <div className="project-detail-container">
+      <h1 className="project-title">{project.projectName}</h1>
+
+      <div className="project-section">
+        <h3>Mô tả</h3>
+        <p>{project.description}</p>
+      </div>
+
+      <div className="project-section">
+        <h3>Mục tiêu</h3>
+        <p>{project.goal}</p>
+      </div>
+
+      <div className="project-section">
+        <h3>Ngoài phạm vi</h3>
+        <p>{project.outScope}</p>
+      </div>
+
+      <div className="project-section">
+        <h3>Yêu cầu bổ sung</h3>
+        <p>{project.additionalRequirement}</p>
+      </div>
+
+      <div className="project-info-grid">
+        <div className="info-item">
+          <strong>Link:</strong><br />
+          <a href={project.link} target="_blank" rel="noopener noreferrer">{project.link}</a>
         </div>
-      ) : (
-        <p>Loading project details...</p>
+
+        <div className="info-item">
+          <strong>Nền tảng:</strong><br />
+          {project.platform?.join(", ")}
+        </div>
+
+        <div className="info-item">
+          <strong>Ngôn ngữ:</strong><br />
+          {project.language?.join(", ")}
+        </div>
+
+        <div className="info-item">
+          <strong>Ngày tạo:</strong><br />
+          {new Date(project.create_At).toLocaleDateString()}
+        </div>
+
+        <div className="info-item">
+          <strong>Ngày kết thúc:</strong><br />
+          {new Date(project.end_At).toLocaleDateString()}
+        </div>
+
+        <div className="info-item">
+          <strong>Trạng thái:</strong><br />
+          <span className={`status ${project.status}`}>{project.status}</span>
+        </div>
+      </div>
+      {project.status === 'Done' && (
+        <div className="list-bug-button-container">
+          <button
+            className="list-bug-button"
+            onClick={() => navigate(`/Q3VzdG9tZXI=/project/list-bug/${projectId}`)}>
+            Xem danh sách Bug
+          </button>
+        </div>
+      )}
+      <div className="testfeature-section">
+        <div className="testfeature-header">
+          <h2>Test Features</h2>
+          <button onClick={() => setShowModal(true)}>+ Thêm Test Feature</button>
+        </div>
+        <div className="testfeature-grid">
+          {(project.testFeatures || []).map((feature, index) => (
+            <TestFeatureCard key={index} feature={feature} />
+          ))}
+        </div>
+      </div>
+
+      {showModal && (
+        <AddTestFeatureModal
+          projectId={projectId}
+          onClose={() => setShowModal(false)}
+          onSubmit={handleAddFeature}
+        />
       )}
 
-      <div className="bug-reports-section">
-        <h3>Bug Reports</h3>
-        {bugReports.length > 0 ? (
-          <div className="bug-report-list">
-            {bugReports.map((bug) => (
-              <div key={bug.id} className="bug-report-item">
-                <div
-                  className="bug-report-summary"
-                  onClick={() => toggleBugDetail(bug.id)}
-                >
-                  <h4>{bug.title}</h4>
-                </div>
-                {expandedBug === bug.id && (
-                  <div className="bug-report-detail">
-                    <p><strong>Description:</strong> {bug.description}</p>
-                    <p><strong>Status:</strong> {bug.status}</p>
-                    <p><strong>Assigned To:</strong> {bug.assignedTo}</p>
-                    <p><strong>Created At:</strong> {new Date(bug.createdAt).toLocaleString()}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>No bug reports available for this project.</p>
-        )}
+      <div className="testfeature-section">
+        <div className="testfeature-header">
+          <h2>Payout Bugs</h2>
+          <button onClick={() => setShowPayoutModal(true)}>+ Thêm Payout</button>
+        </div>
+        <div className="testfeature-grid">
+          {payouts.map((payout, idx) => (
+            <PayoutBugCard key={idx} payout={payout} />
+          ))}
+        </div>
       </div>
+
+      {showPayoutModal && (
+        <PayoutBugModal
+          projectId={projectId}
+          onClose={() => setShowPayoutModal(false)}
+          onSubmit={handleAddPayout}
+        />
+      )}
     </div>
   );
 };

@@ -20,7 +20,7 @@
 
 .container-header .test-btn {
 	outline: none;
-	background: #027f77;
+	background: var(--primary-color);
 	border: none;
 	padding: 5px 8px;
 	width: 100px;
@@ -245,12 +245,13 @@ td {
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	text-decoration: none;
-	background-color: #027f77;
+	background-color: var(--primary-color);
 	color: white;
 	opacity: 0.5;
+	pointer-events: none;
 }
 .button {
-	background-color: #027f77;
+	background-color: var(--primary-color);
 	color: white;
 	cursor: pointer;
 	opacity: 1 !important;
@@ -293,24 +294,9 @@ td {
 	color: #333;
 }
 
-.feature-wrapper .triangle {
-	width: 0;
-	height: 0;
-	border-left: 10px solid transparent;
-	border-right: 10px solid transparent;
-	display: inline-block;
-}
-
-.feature-wrapper .triangle.functional {
-	border-bottom: 10px solid #ff0000; /* Red for Functional */
-}
-
-.feature-wrapper .triangle.content {
-	border-bottom: 10px solid #0000ff; /* Blue for Content */
-}
-
-.feature-wrapper .triangle.visual {
-	border-bottom: 10px solid #ffa500; /* Orange for Visual */
+.bug-item img {
+	width: 20px;
+	height: 20px;
 }
 
 .feature-wrapper .content-box {
@@ -354,12 +340,13 @@ td {
 	align-items: center;
 	justify-content: center;
 	border-radius: 50%;
-	border: 2px solid black;
+	border: 2px solid red;
 	padding: 8px;
 	cursor: pointer;
 }
 .session-section div:hover {
-	background: rgb(23, 3, 2);
+	background: red;
+	border-color: black;
 }
 .session-section img {
 	width: 15px;
@@ -397,6 +384,45 @@ td {
 .device-item-content div {
 	display: flex;
 	gap: 10px;
+}
+
+.confirm-label {
+	font-size: 25px;
+	margin: 0;
+	padding: 10px;
+	background: var(--primary-color);
+	color: white;
+	text-align: center;
+}
+
+.confirm-title {
+	text-align: center;
+	width: 100%;
+	padding: 20px;
+}
+
+.confirm-btn {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+.confirm-btn-cancle {
+	background: white;
+	color: black;
+	border: 1px solid var(--primary-color);
+	padding: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.confirm-btn-accept {
+	color: white;
+	border: none;
+	background-color: var(--primary-color);
+	padding: 10px;
+	border-radius: 10px;
+	cursor: pointer;
 }
 @keyframes slideDown {
 	0% {

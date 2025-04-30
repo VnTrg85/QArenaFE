@@ -17,3 +17,35 @@ export const get_user_by_email = async email => {
 		}
 	}
 };
+
+export const update_user = async data => {
+	try {
+		const res = await axios.put(`${base_url_api}/user/update`, data);
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};
+
+export const update_user_avatar = async data => {
+	try {
+		const res = await axios.put(`${base_url_api}/user/update/avatar`, data);
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};
