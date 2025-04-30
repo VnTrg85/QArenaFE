@@ -11,6 +11,7 @@ const cx = classname.bind(styles);
 const Login = () => {
 	const navigate = useNavigate();
 	const { showToast } = useToast();
+	console.log(1);
 	//State
 	const { setUserValue, getUserValue } = useUser();
 	const [data, setData] = useState({
@@ -234,6 +235,10 @@ const Login = () => {
 	const handleSignin = async () => {
 		const res = await login({ email: data.email, password: data.password });
 		if (res.status == "success") {
+			showToast({
+				message: "Login successfully",
+				type: res.status,
+			});
 			localStorage.setItem("access_token", res.data.token);
 			localStorage.setItem(
 				"user",
@@ -247,7 +252,12 @@ const Login = () => {
 				message: "Login successfully",
 				type: "success",
 			});
-			navigate("/dGVzdGVy");
+			console.log(res.data.role)
+			if (res.data.role == "tester") {
+				navigate("/dGVzdGVy");
+			} else if (res.data.role == "customer") {
+				navigate("/Q3VzdG9tZXI=");
+			}
 		} else {
 			showToast({
 				message: res.data || "Some thing went wrong",
