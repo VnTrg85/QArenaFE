@@ -18,7 +18,7 @@ function Notification() {
 			const res = await get_noti_by_user(userId);
 			if (res.status == "success") {
 				console.log(res.data);
-				setNotis(res.data);
+				setNotis(res.data.reverse());
 			} else {
 				showToast({
 					message: "Something went wrong",
@@ -42,7 +42,7 @@ function Notification() {
 		markAllRead();
 	}, []);
 	const handleNavigate = item => {
-		if (item.type == "BUG REPORT") {
+		if (item.type == "BUG_REPORT") {
 			navigate(`/dGVzdGVy/project/${item?.link_url?.split("/")[0]}/bugs/${item.link_url.split("/")[1]}`);
 		}
 	};
@@ -135,8 +135,13 @@ function Notification() {
 							<span>{item.sender?.name}</span>
 						</div>
 						<div className={cx("noti-right")}>
-							<span>{(item.type = "BUG_REPORT" ? "BUG REPORT" : "TEST PROJECT")}</span>
-							<span>{item.content}</span>
+							<span>{item.type == "BUG_REPORT" ? "BUG REPORT" : "TEST PROJECT"}</span>
+							<span className={cx("noti-content")}>{item.content}</span>
+							{item.type == "BUG_REPORT" && (
+								<span className={cx("more-info")}>
+									Project ID: #{item?.link_url?.split("/")[0]} Bug ID: #{item?.link_url?.split("/")[1]}
+								</span>
+							)}
 							<span onClick={() => handleNavigate(item)}>More detail</span>
 						</div>
 					</div>

@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import useToast from "../../../CustomHook/useToast";
 import Modal from "../Modal/Modal";
 import { setCurrentProject } from "../../../Store/testProjectSlice";
+import { formatDate, formatDateTimeFunc } from "../../../Utils/formatTime";
 const cx = classname.bind(styles);
 function ArticleDetail({ testUserProject, project }) {
 	const location = useLocation();
@@ -118,10 +119,9 @@ function ArticleDetail({ testUserProject, project }) {
 							<div className={cx("status")}>
 								<div className={cx("status-badge")}>
 									<span className={cx("label")}>Date </span>
-									<span className={cx("value")}>: 18.08.24 📅</span>
+									<span className={cx("value")}>: {formatDateTimeFunc(article?.end_At)}</span>
 								</div>
 								<span className={cx("status-badge")}>🟢 Active</span>
-								<span>Web Shops</span>
 							</div>
 						)}
 
@@ -210,15 +210,12 @@ function ArticleDetail({ testUserProject, project }) {
 											<div className={cx("feature-section")}>
 												<h2>BUG TYPES</h2>
 												<div className={cx("bug-types")}>
-													<div className={cx("bug-item")}>
-														<span className={cx("triangle", "functional")}></span> Functional
-													</div>
-													<div className={cx("bug-item")}>
-														<span className={cx("triangle", "content")}></span> Content
-													</div>
-													<div className={cx("bug-item")}>
-														<span className={cx("triangle", "visual")}></span> Visual
-													</div>
+													{item.bugType.map(val => (
+														<div className={cx("bug-item")}>
+															<img src={val.icon_link}></img>
+															<span>{val.name}</span>
+														</div>
+													))}
 												</div>
 											</div>
 
@@ -226,7 +223,7 @@ function ArticleDetail({ testUserProject, project }) {
 											<div className={cx("section")}>
 												<h2>WHERE YOU CAN FIND THIS FEATURE:</h2>
 												<div className={cx("content-box")}>
-													<p>Can be found from the Homepage after clicking "compare all mattresses"</p>
+													<p>{item.input}</p>
 												</div>
 											</div>
 
@@ -234,16 +231,7 @@ function ArticleDetail({ testUserProject, project }) {
 											<div className={cx("section")}>
 												<h2>WHAT YOU SHOULD FIND THERE/TEST FOR:</h2>
 												<div className={cx("content-box")}>
-													<ul>
-														<li>
-															Should be able to select up to three mattresses to compare against each other depending on
-															screen size/device type
-														</li>
-														<li>
-															Each selected mattress should include a "Shop Now" button that redirects you to the PDP of
-															product
-														</li>
-													</ul>
+													<p>{item.output}</p>
 												</div>
 											</div>
 										</div>
@@ -280,7 +268,7 @@ function ArticleDetail({ testUserProject, project }) {
 									</table>
 								</div>
 							</div>
-							<div className={cx("device-ctn")}>
+							{/* <div className={cx("device-ctn")}>
 								<h5>Requested OS</h5>
 								<div className={cx("device-item")}>
 									<img src="/icons/i-computer.svg"></img>
@@ -292,8 +280,8 @@ function ArticleDetail({ testUserProject, project }) {
 										</div>
 									</div>
 								</div>
-							</div>
-							<div className={cx("device-ctn")}>
+							</div> */}
+							{/* <div className={cx("device-ctn")}>
 								<h5>Available for reproduction</h5>
 								<div className={cx("device-item")}>
 									<img src="/icons/i-mac.svg"></img>
@@ -305,7 +293,7 @@ function ArticleDetail({ testUserProject, project }) {
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> */}
 						</div>
 					)}
 				</div>

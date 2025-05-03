@@ -63,3 +63,10 @@
 	background: white;
 	color: var(--primary-color);
 }
+.noti-right .noti-content {
+	color: rgb(21, 16, 15);
+	font-weight: 600;
+}
+.noti-right .more-info {
+	font-size: 12px;
+}

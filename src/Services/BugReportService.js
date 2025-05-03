@@ -64,3 +64,32 @@ export const get_report_sumary = async id => {
 		}
 	}
 };
+
+export const update_status_of_bug_report = async data => {
+	try {
+		const res = await axios.post(`${base_url_api}/bugReport/update/status/2`, data);
+		return res.data;
+	} catch (error) {
+		console.log(error);
+		return {
+			status: "error",
+			data: "Something went wrong",
+		};
+	}
+};
+
+export const get_bug_report_by_user = async id => {
+	try {
+		const res = await axios.get(`${base_url_api}/bugReport/get/user/${id}`);
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};

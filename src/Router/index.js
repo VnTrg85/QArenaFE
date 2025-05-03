@@ -20,6 +20,7 @@ import Notification from "../Tester/Page/Notification/Notification";
 import Team from "../Tester/Page/ProjectDetail/Team/Team";
 import Profile from "../Tester/Page/Profile/Profile";
 import Activity from "../Tester/Page/Activity/Activity";
+import Billing from "../Tester/Page/Billing/Billing";
 const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
@@ -101,7 +102,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "billing",
-				element: <Home />,
+				element: <Billing />,
 			},
 			{
 				path: "learn",

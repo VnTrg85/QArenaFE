@@ -18,7 +18,7 @@
 	background: white;
 	border-radius: 16px;
 	padding: 20px 16px 12px;
-	width: 240px;
+	width: 200px;
 	height: 200px;
 	text-align: center;
 	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
@@ -79,4 +79,56 @@
 
 .btn-detail:hover {
 	background: #026b68;
+}
+
+.activity-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 20px 0;
+	font-size: 16px;
+	min-width: 600px;
+	box-shadow: 0 0 10px rgba(2, 127, 119, 0.2);
+	border-radius: 8px;
+	overflow: hidden;
+}
+.activity-table table {
+	width: 100%;
+}
+.activity-table th,
+.activity-table td {
+	padding: 12px 15px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+.activity-table th {
+	background-color: #027f77;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+.activity-table tr {
+	background-color: #ffffff;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.activity-table tr:hover {
+	background-color: #e6f7f5;
+}
+
+.activity-table td {
+	color: #333333;
+}
+
+.activity-table td img {
+	width: 20px;
+	height: 20px;
+}
+
+.activity-table td:last-child {
+	text-align: right;
+}
+
+.activity-table tr:nth-child(even) {
+	background-color: #f9fdfc;
 }

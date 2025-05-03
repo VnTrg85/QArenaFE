@@ -58,6 +58,11 @@
 	margin-bottom: 15px;
 }
 
+.attachments-header {
+	display: flex;
+	align-items: center;
+}
+
 /* Steps - Thiết kế đẹp mắt và chuẩn mực */
 .steps {
 	background: #fff;
@@ -374,12 +379,17 @@
 
 .status {
 	margin: 0;
-	font-weight: 500;
-	color: #ef4444; /* red */
+	font-weight: 500 !important;
 }
 
-.status.rejected {
-	color: #dc2626;
+.rejected {
+	color: rgb(245, 86, 86) !important;
+}
+.accepted {
+	color: rgb(3, 33, 109) !important;
+}
+.awaiting {
+	color: rgb(23, 222, 86) !important; /* red */
 }
 
 .icon,
@@ -433,6 +443,133 @@
 	background: var(--primary-color);
 	color: white;
 }
+
+.reprod-ctn {
+	padding: 0 20px 20px 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.reprod-container {
+	padding: 20px;
+	padding-top: 0;
+	border-radius: 10px;
+	width: 100%;
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+.reproducted-ctn {
+	display: flex;
+	flex-direction: column;
+}
+
+.reproducted-ctn-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.reproducted-ctn-header img {
+	width: 25px;
+	height: 25px;
+	background: var(--primary-color);
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.reproducted-item-ctn {
+	gap: 10px;
+	border-radius: 10px;
+	padding: 10px;
+	font-size: 12px;
+	background-color: var(--primary-color);
+	color: white;
+	margin-top: 10px;
+}
+
+.reproducted-item {
+	margin-top: 5px;
+	display: flex;
+	gap: 5px;
+	overflow: hidden;
+}
+
+.reproducted-item a {
+	color: white !important;
+}
+
+.reprod-container h3 {
+	font-size: 20px;
+	margin-bottom: 15px;
+	color: #333;
+}
+
+.reprod-container input[type="file"] {
+	display: none;
+	margin-bottom: 15px;
+}
+
+.reprod-container label {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 8px;
+}
+
+.reprod-container select {
+	width: 100%;
+	padding: 8px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	margin-bottom: 15px;
+}
+
+.browsers {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.browsers img {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	opacity: 0.6;
+	border: 2px solid transparent;
+	border-radius: 5px;
+	transition: all 0.3s ease;
+	padding: 5px;
+}
+
+.browsers img.active {
+	opacity: 1;
+	background: var(--primary-color);
+}
+
+.reprod-btn-group {
+	display: flex;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+.reprod-btn-group button {
+	flex: 1;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background: var(--primary-color);
+	color: white;
+	cursor: pointer;
+	transition: background 0.3s ease;
+	border: 1px solid #ccc;
+}
+
+.reprod-btn-group button:hover {
+	background: white;
+	color: var(--primary-color);
+	border: 1px solid var(--primary-color);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
 	.bug-wrapper {

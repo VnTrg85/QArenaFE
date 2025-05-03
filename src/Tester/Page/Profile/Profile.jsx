@@ -3,6 +3,7 @@ import styles from "./Profile.module.css";
 import classname from "classnames/bind";
 import CalendarHeatmap from "react-calendar-heatmap";
 import Modal from "../../Component/Modal/Modal";
+import Activity from "../../Page/Activity/Activity";
 import "react-calendar-heatmap/dist/styles.css";
 import ModalEditProfile from "../../Component/Modal/ModalEditProfile/ModalEditProfile";
 import { useUser } from "../../../Context/AuthContext";
@@ -71,7 +72,6 @@ function Profile() {
 		const fetchSumary = async () => {
 			const res = await get_report_sumary(user.id);
 			if (res.status == "success") {
-				console.log(res.data);
 				setFrequency(res.data);
 			} else {
 				console.log("Error happened");
@@ -155,7 +155,7 @@ function Profile() {
 				</div>
 				<div className={cx("employee-profile-right-section")}>
 					<div className={cx("employee-activity-compensation")}>
-						<div className={cx("employee-activity-section")}>
+						{/* <div className={cx("employee-activity-section")}>
 							<div className={cx("employee-activity-label")}>
 								<h3>Activity</h3>
 								<div className={cx("employee-view-all")}>
@@ -185,7 +185,7 @@ function Profile() {
 									<div class={cx("stat-label")}>Reproductions</div>
 								</div>
 							</div>
-						</div>
+						</div> */}
 						<div className={cx("employee-compensation-section")}>
 							<div className={cx("employee-activity-label")}>
 								<h3>Income</h3>
@@ -232,6 +232,7 @@ function Profile() {
 							/>
 						</div>
 					</div>
+					<Activity></Activity>
 				</div>
 			</div>
 			{isOpenModalEdit && (

@@ -1,0 +1,166 @@
+.billing-container {
+	width: 100%;
+	height: 95%;
+	font-family: "DM Sans", sans-serif;
+	padding: 0 20px 0 20px;
+	overflow-y: auto;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 1rem;
+}
+
+.credit-box {
+	display: flex;
+	align-items: center;
+	background: #fff;
+	width: 400px;
+	border-radius: 12px;
+	padding: 1rem;
+	justify-content: space-between;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	margin-bottom: 2rem;
+}
+
+.credit-icon {
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+}
+
+.credit-info {
+	flex-grow: 1;
+	padding-left: 1rem;
+}
+
+.credit-amount {
+	font-size: 22px;
+	font-weight: bold;
+	display: block;
+}
+
+.credit-label {
+	font-size: 14px;
+	color: gray;
+}
+
+.manage-btn {
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 8px;
+	font-weight: 500;
+	cursor: pointer;
+}
+.manage-btn:hover {
+	background: var(--primary-color);
+	color: white;
+}
+
+.subtitle {
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 1rem;
+}
+
+.table {
+	background: #fff;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.table-header,
+.table-row {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr 1fr;
+	padding: 1rem;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.table-header {
+	font-weight: bold;
+	background-color: #f9f9f9;
+}
+
+.status-completed {
+	background-color: #e2f7e6;
+	color: #249e57;
+	padding: 0.3rem 0.7rem;
+	border-radius: 8px;
+	font-size: 14px;
+	text-align: center;
+}
+
+.payout-form {
+	width: 100%;
+	max-width: 450px;
+	margin: 2rem auto;
+	border-radius: 12px;
+}
+
+.payout-form__group {
+	margin-bottom: 1.25rem;
+}
+
+.payout-form__label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 600;
+	color: #2c3e50;
+}
+
+.payout-form__select,
+.payout-form__input {
+	width: 100%;
+	padding: 0.75rem;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	font-size: 14px;
+	transition: border-color 0.2s;
+}
+
+.payout-form__input {
+	width: 94%;
+}
+
+.payout-form__select:focus,
+.payout-form__input:focus {
+	border-color: #007bff;
+	outline: none;
+}
+
+.payout-btn-group {
+	display: flex;
+	gap: 20px;
+}
+
+.payout-form__submit-button {
+	width: 100%;
+	padding: 0.9rem;
+	background: var(--primary-color);
+	color: white;
+	font-weight: 600;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: 1px solid #ccc;
+}
+
+.payout-form__submit-button:hover {
+	background: white;
+	color: var(--primary-color);
+	border: 1px solid var(--primary-color);
+}
+
+.cancle {
+	background: white;
+	color: var(--primary-color);
+}
+
+.cancle:hover {
+	opacity: 0.7;
+}

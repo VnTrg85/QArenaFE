@@ -26,12 +26,12 @@ function Sidebar() {
 					</div>
 					<span>Dashboard</span>
 				</div>
-				<div className={cx("sidebar-item")}>
+				{/* <div className={cx("sidebar-item")}>
 					<div className={cx("sidebar-item-img")}>
 						<img src="/icons/i-ranking.svg"></img>
 					</div>
 					<span>Ranking</span>
-				</div>
+				</div> */}
 			</div>
 			<div className={cx("sidebar-divider")}>
 				<div className={cx("sidebar-header")}>
@@ -45,14 +45,13 @@ function Sidebar() {
 						></img>
 						<span>{getUserValue().name}</span>
 					</div>
-					<div className={cx("sidebar-header-right")}>
-						<img src="/icons/i-chevron-left.svg"></img>
+					<div onClick={handleSignout} className={cx("sidebar-header-right")}>
+						<img src="/icons/i-out.svg"></img>
 						{/* <img src="/icons/i-chevron-right.svg"></img> */}
 					</div>
-					<div className={cx("user-popup")}>
+					{/* <div className={cx("user-popup")}>
 						<span onClick={handleSignout}>Sign out</span>
-						<span>Setting</span>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>

@@ -10,6 +10,7 @@ const cx = classname.bind(styles);
 
 function Header() {
 	const navigate = useNavigate();
+
 	const [currentItem, setCurrentItem] = useState("");
 	const handleNavigate = path => {
 		navigate(`/dGVzdGVy/${path}`);

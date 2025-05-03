@@ -169,7 +169,7 @@ function CreateBugReport() {
 					testFeature: { id: selectedFeature.id },
 					user: { id: getUserValue().id },
 					session: { id: sessionDoing.id },
-					device: { id: Number(currentDevice) },
+					device: { id: Number(devices.find(item => item.id == currentDevice).devices.id) },
 					versionSelected: devices.find(item => item.id == currentDevice).versionSelected,
 				};
 				const res = await create_bug_report(data);
@@ -443,7 +443,7 @@ function CreateBugReport() {
 					<label for="source" className={cx("add-attachment")}>
 						+ Add attachment
 					</label>
-					<input onChange={e => handleChangeFile(e)} type="file" accept="video/mp4" hidden id="source"></input>
+					<input onChange={e => handleChangeFile(e)} type="file" hidden id="source"></input>
 				</div>
 				<div className={cx("files-ctn")}>
 					{files.map((item, index) => (

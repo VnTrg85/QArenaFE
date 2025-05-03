@@ -22,7 +22,7 @@ function ProjectDetail() {
 	const { getUserValue } = useUser();
 	const { showToast } = useToast();
 	const dispatch = useDispatch();
-	const { id } = useParams();
+	const projectId = location.pathname.split("/")[3];
 	//state
 	const [isReady, setIsReady] = useState(false);
 	const [isOpenSessionPopup, setIsOpenSessionPopup] = useState(false);
@@ -39,16 +39,15 @@ function ProjectDetail() {
 		{ id: 1, name: "Overview", path: "" },
 		{ id: 2, name: "Test Sessions", path: "session" },
 		{ id: 3, name: "Bugs", path: "bugs" },
-		{ id: 4, name: "Known Bugs", path: "known-bug" },
-		{ id: 5, name: "Chat", path: "chat" },
-		{ id: 6, name: "Team", path: "teams" },
+		{ id: 4, name: "Chat", path: "chat" },
+		{ id: 5, name: "Team", path: "teams" },
 	];
 	const sessions = useSelector(state => state.session);
 	//Side effect
 	useEffect(() => {
-		if (id) {
+		if (projectId) {
 			const fetchData = async () => {
-				const res = await get_test_project_detail(id);
+				const res = await get_test_project_detail(projectId);
 				if (res.status == "success") {
 					dispatch(setCurrentProject(res.data));
 				} else {
@@ -60,7 +59,7 @@ function ProjectDetail() {
 			};
 			fetchData();
 		}
-	}, [id]);
+	}, [projectId]);
 	useEffect(() => {
 		const endSessionFuc = async () => {
 			await handleEndSession();

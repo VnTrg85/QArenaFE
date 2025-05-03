@@ -48,11 +48,16 @@
 	align-items: center;
 	justify-content: center;
 	padding: 5px;
-	background: white;
+	border: 1px solid white;
 }
 .sidebar-header-right img {
-	width: 15px;
-	height: 15px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.sidebar-header-right:hover {
+	background: #ddd;
 }
 
 .sidebar-item {

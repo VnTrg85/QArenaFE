@@ -49,3 +49,35 @@ export const update_user_avatar = async data => {
 		}
 	}
 };
+
+export const get_user_payout_infor = async id => {
+	try {
+		const res = await axios.get(`${base_url_api}/user/payoutinfo/${id}`);
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};
+
+export const update_user_payout_infor = async data => {
+	try {
+		const res = await axios.put(`${base_url_api}/user/payoutinfo/update`, data);
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};

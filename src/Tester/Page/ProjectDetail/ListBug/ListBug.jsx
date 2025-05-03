@@ -28,7 +28,7 @@ function ListBug() {
 		fetchData();
 	}, []);
 	const handleToBugDetail = id => {
-		navigate(`/dGVzdGVy/project/1/bugs/${id}`);
+		navigate(`/dGVzdGVy/project/${projectId}/bugs/${id}`);
 	};
 	return (
 		<div className={cx("listbug-ctn")}>
@@ -70,6 +70,7 @@ function ListBug() {
 								<td>
 									<img
 										src={
+											item.user.avatar ||
 											"https://static.vecteezy.com/system/resources/thumbnails/020/271/547/small/portrait-of-a-beautiful-asian-woman-full-face-portrait-in-flat-style-avatar-female-diversity-free-vector.jpg"
 										}
 										alt="User"
