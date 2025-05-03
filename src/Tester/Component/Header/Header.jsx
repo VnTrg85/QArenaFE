@@ -6,7 +6,6 @@ import { useUser } from "../../../Context/AuthContext";
 import { useEffect, useState } from "react";
 import { get_unread_noti } from "../../../Services/NotificationService.js";
 import useToast from "../../../CustomHook/useToast";
-import { useNavigate } from "react-router-dom";
 const cx = classname.bind(styles);
 
 function Header() {
