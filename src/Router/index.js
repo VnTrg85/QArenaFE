@@ -4,8 +4,8 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 //Pages
 import Login from "../Pages/Login/Login";
 import Home from "../Tester/Page/Home/Home";
-import HomeCustomer from "../Customer/Pages/HomeCustomer/HomeCustomer";
-
+import Dashboard from "../Customer/Page/Dashboard/Dashboard";
+import ProjectPage from "../Customer/Page/Project/ProjectPage";
 import AuthMiddleware from "./AuthMiddleware/AuthMiddleware";
 import ProjectDetail from "../Tester/Page/ProjectDetail/ProjectDetail";
 import Academy from "../Tester/Page/Academy/Academy";
@@ -21,6 +21,9 @@ import Team from "../Tester/Page/ProjectDetail/Team/Team";
 import Profile from "../Tester/Page/Profile/Profile";
 import Activity from "../Tester/Page/Activity/Activity";
 import Billing from "../Tester/Page/Billing/Billing";
+import DashboardLayout from "../Customer/Layout/Dashboard/DashboardLayout";
+import ProjectDetailPage from "../Customer/Page/ProjectDetail/ProjectDetailPage";
+import ProjectModal from "../Customer/Component/ProjectModal/ProjectModal";
 const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
@@ -128,7 +131,25 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "",
-				element: <HomeCustomer />,
+				element: <DashboardLayout />,
+				children: [
+					{
+						path: "",
+						element: <Dashboard />,
+					},
+					{
+						path: "project",
+						element: <ProjectPage />,
+					},
+					{
+						path: "project/:id",
+						element: <ProjectDetailPage />,
+					},
+					{
+						path: "project/create",
+						element: <ProjectModal />,
+					},
+				],
 			},
 		],
 	},
