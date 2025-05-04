@@ -11,7 +11,6 @@ const cx = classname.bind(styles);
 const Login = () => {
 	const navigate = useNavigate();
 	const { showToast } = useToast();
-	console.log(1);
 	//State
 	const { setUserValue, getUserValue } = useUser();
 	const [data, setData] = useState({

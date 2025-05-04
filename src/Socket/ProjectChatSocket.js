@@ -30,7 +30,6 @@ const ProjectChatSocket = ({ projectId, onMessage }) => {
 	}, [projectId]);
 
 	const sendMessageProject = message => {
-		console.log(1111);
 		clientRef.current?.publish({
 			destination: "/app/project/chat.send",
 			body: JSON.stringify(message),

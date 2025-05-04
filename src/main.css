@@ -1,6 +1,7 @@
 :root {
 	--primary-color: #027f77 !important;
 	--secondary-color: #ffffff !important;
+	font-family: "Segoe UI", sans-serif;
 }
 
 body {

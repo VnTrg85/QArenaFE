@@ -12,7 +12,7 @@ import { get_message_by_bug_report } from "../../../../Services/MessageService";
 import { update_status_of_bug_report } from "../../../../Services/BugReportService";
 import Modal from "../../../Component/Modal/Modal";
 import { get_browsers, get_user_device } from "../../../../Services/DeviceService";
-import { create_reproduction, get_all_reproduction_by_bugreport } from "../../../../Services/ReproductionService";
+import { accept_repr, create_reproduction, get_all_reproduction_by_bugreport, reject_repr } from "../../../../Services/ReproductionService";
 const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_UPLOAD_PRESET;
 const cx = classname.bind(styles);
@@ -207,6 +207,37 @@ function BugDetail() {
 		}
 		return true;
 	}, [reproduction]);
+
+	const handleAcceptRepr = async id => {
+		const res = await accept_repr(id);
+		if (res.status == "success") {
+			setReproduction(prev =>
+				prev.map(item => {
+					if (item.id == id) {
+						item.status = res.data.status;
+					}
+					return item;
+				}),
+			);
+		} else {
+			console.log(res);
+		}
+	};
+	const handleRejectRepr = async id => {
+		const res = await reject_repr(id);
+		if (res.status == "success") {
+			setReproduction(prev =>
+				prev.map(item => {
+					if (item.id == id) {
+						item.status = res.data.status;
+					}
+					return item;
+				}),
+			);
+		} else {
+			console.log(res);
+		}
+	};
 	return (
 		<div className={cx("bug-wrapper")}>
 			<div>
@@ -358,6 +389,28 @@ function BugDetail() {
 														<span>Browser: </span>
 														<span>{u.browswer.name}</span>
 													</div>
+													<div className={cx("reproducted-item")}>
+														<span>Status: </span>
+														<span className={cx("repr-status")}>{u.status}</span>
+													</div>
+													{getUserValue().role == "4" && (
+														<div className={cx("repr-actions")}>
+															<span
+																onClick={() => {
+																	handleRejectRepr(u.id);
+																}}
+															>
+																Reject
+															</span>
+															<span
+																onClick={() => {
+																	handleAcceptRepr(u.id);
+																}}
+															>
+																Accept
+															</span>
+														</div>
+													)}
 												</div>
 											))}
 										</div>

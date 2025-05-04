@@ -11,6 +11,7 @@ import { formatDateBirth } from "../../../Utils/formatTime";
 import { update_user_avatar } from "../../../Services/UserService";
 import { get_report_sumary } from "../../../Services/BugReportService";
 import useToast from "../../../CustomHook/useToast";
+import { get_all_user_payout_bug } from "../../../Services/UserPayout";
 const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
 const UPLOAD_PRESET = process.env.REACT_APP_UPLOAD_PRESET;
 const cx = classname.bind(styles);
@@ -20,6 +21,7 @@ function Profile() {
 	const { getUserValue, setUserValue } = useUser();
 	const [user, setUser] = useState(getUserValue());
 	const [frequency, setFrequency] = useState([]);
+	const [payout, setPayout] = useState([]);
 	const inputEl = useRef(null);
 	const { showToast } = useToast();
 	const updateUser = val => {
@@ -78,6 +80,18 @@ function Profile() {
 			}
 		};
 		fetchSumary();
+	}, []);
+
+	useEffect(() => {
+		const fetchPayout = async () => {
+			const res = await get_all_user_payout_bug(user.id);
+			if (res.status == "success") {
+				setPayout(res.data);
+			} else {
+				console.log("Error happened");
+			}
+		};
+		fetchPayout();
 	}, []);
 	return (
 		<div className={cx("employee-profile")}>
@@ -190,27 +204,17 @@ function Profile() {
 							<div className={cx("employee-activity-label")}>
 								<h3>Income</h3>
 								<div className={cx("employee-view-all")}>
-									<a href="#">View all</a>
+									<a href="/dGVzdGVy/billing">View all</a>
 								</div>
 							</div>
-							<div className={cx("employee-compensation-item")}>
-								<p>862.00 USD</p>
-								<p>
-									<span>Effective date on May 10, 2015</span>
-								</p>
-							</div>
-							<div className={cx("employee-compensation-item")}>
-								<p>1560.00 USD</p>
-								<p>
-									<span>Effective date on Jun 08, 2022</span>
-								</p>
-							</div>
-							<div className={cx("employee-compensation-item")}>
-								<p>378.00 USD</p>
-								<p>
-									<span>Effective date on Jun 08, 2022</span>
-								</p>
-							</div>
+							{payout?.map(item => (
+								<div className={cx("employee-compensation-item")}>
+									<p>{item.totalAmount} USD</p>
+									<p>
+										<span>Effective date on {item.date}</span>
+									</p>
+								</div>
+							))}
 						</div>
 					</div>
 					<div className={cx("employee-job-info")}>

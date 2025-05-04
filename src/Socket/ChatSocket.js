@@ -12,8 +12,6 @@ const ChatSocket = ({ bugId, userId, onMessage, onNotify }) => {
 			webSocketFactory: () => socket,
 			reconnectDelay: 5000,
 			onConnect: () => {
-				console.log("Connected!");
-
 				// Subscribe nhận tin nhắn trong bug này
 				client.subscribe(`/topic/bug-report/${bugId}`, message => {
 					const msg = JSON.parse(message.body);

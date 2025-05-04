@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import classname from "classnames/bind";
 import NotificationSocket from "../../../Socket/NotificationSocket";
@@ -10,7 +10,7 @@ const cx = classname.bind(styles);
 
 function Header() {
 	const navigate = useNavigate();
-
+	const location = useLocation();
 	const [currentItem, setCurrentItem] = useState("");
 	const handleNavigate = path => {
 		navigate(`/dGVzdGVy/${path}`);
@@ -23,7 +23,10 @@ function Header() {
 		userId,
 		onNotify: noti => setNumber(prev => prev + 1),
 	});
-
+	useEffect(() => {
+		const status = location.pathname.split("/")[2];
+		setCurrentItem(status);
+	}, [location]);
 	useEffect(() => {
 		const fetchData = async () => {
 			const res = await get_unread_noti(userId);

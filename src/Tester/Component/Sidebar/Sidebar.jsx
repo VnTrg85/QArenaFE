@@ -24,7 +24,7 @@ function Sidebar() {
 					<div className={cx("sidebar-item-img")}>
 						<img src="/icons/i-dashboard-active.svg"></img>
 					</div>
-					<span>Dashboard</span>
+					<span>Projects</span>
 				</div>
 				{/* <div className={cx("sidebar-item")}>
 					<div className={cx("sidebar-item-img")}>

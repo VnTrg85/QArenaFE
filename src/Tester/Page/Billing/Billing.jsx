@@ -19,6 +19,7 @@ function Billing() {
 		const fetchPayout = async () => {
 			const res = await get_all_user_payout_bug(getUserValue().id);
 			if (res.status == "success") {
+				console.log(res.data);
 				setBillingData(res.data);
 			} else {
 				console.log(res);
@@ -30,7 +31,6 @@ function Billing() {
 		const fetchUserPayoutData = async () => {
 			const res = await get_user_payout_infor(getUserValue().id);
 			if (res.status == "success") {
-				console.log(res.data);
 				setPayoutInfor(res.data);
 				setForm(res.data);
 			}

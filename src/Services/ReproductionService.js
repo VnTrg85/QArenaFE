@@ -51,3 +51,37 @@ export const get_all_reproduction_by_user = async id => {
 		}
 	}
 };
+
+export const accept_repr = async id => {
+	try {
+		const res = await axios.post(`${base_url_api}/reproduction/accept/${id}`);
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			console.error("Unexpected error:", error);
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};
+
+export const reject_repr = async id => {
+	try {
+		const res = await axios.post(`${base_url_api}/reproduction/reject/${id}`);
+		return res.data;
+	} catch (error) {
+		if (error.response) {
+			return error.response.data;
+		} else {
+			console.error("Unexpected error:", error);
+			return {
+				status: "error",
+				data: "Something went wrong",
+			};
+		}
+	}
+};
