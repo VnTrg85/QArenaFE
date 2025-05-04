@@ -82,3 +82,9 @@
     color: #000;
   }
   
+  .sidebar-menu li.active {
+    font-weight: bold;
+    color: #007bff;
+    background-color: #e6f0ff;
+  }
+  

@@ -1,0 +1,141 @@
+.notification-page {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin-left: 20px;
+}
+
+.notification-page h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.notification-item {
+  border-left: 6px solid #007bff;
+  background-color: #f9f9f9;
+  padding: 15px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.notification-item.unread {
+  background-color: #eaf3ff;
+  border-left-color: #007bff;
+}
+
+.notification-item.read {
+  background-color: #f0f0f0;
+  border-left-color: #ccc;
+}
+
+.notification-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.notification-body {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #888;
+}
+
+.no-notification {
+  color: #666;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Modal styles */
+.notification-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-body p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.modal-body strong {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.modal-body a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.modal-body a:hover {
+  text-decoration: underline;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+  background-color: #f0f0f0;
+}

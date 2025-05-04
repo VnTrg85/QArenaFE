@@ -13,6 +13,66 @@ const handleError = (error) => {
   }
 };
 
+export const getBugReports = async (projectId) => {
+  try {
+    const response = await axiosClient.get(`/bugReport/get/project/${projectId}`);
+    return response.data.data;
+  } catch (error) {
+    const errorResponse = handleError(error);
+    throw errorResponse;
+  }
+};
+
+export const getBugFixRate = async (userId) => {
+  try {
+    const response = await axiosClient.get(`/bugReport/getSumary/${userId}`);
+    return response.data.data;
+  } catch (error) {
+    const errorResponse = handleError(error);
+    throw errorResponse;
+  }
+};
+
+export const getSeverityBugCounts = async (userId) => {
+  try {
+    const response = await axiosClient.get(`/bugReport/getSumary/${userId}`);
+    return response.data.data;
+  } catch (error) {
+    const errorResponse = handleError(error);
+    throw errorResponse;
+  }
+};
+
+export const getBugReportSummary = async (userId) => {
+  try {
+    const response = await axiosClient.get(`/bugReport/getSumary/${userId}`);
+    return response.data.data;
+  } catch (error) {
+    const errorResponse = handleError(error);
+    throw errorResponse;
+  }
+};
+
+export const getPayoutBugsByTestProject = async (testProjectId) => {
+  try {
+    const response = await axiosClient.get(`/get/${testProjectId}/testproject`);
+    return response.data.data;
+  } catch (error) {
+    const errorResponse = handleError(error);
+    throw errorResponse;
+  }
+};
+
+export const getNotifications = async () => {
+  try {
+    const res = await axiosClient.get('/notifications');
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+
 export const getTestProjectsByUser = async (userId) => {
   try {
     const res = await axiosClient.get(`/testProject/user/${userId}`);
@@ -115,4 +175,8 @@ export const exportBugsToExcel = async (projectId) => {
   } catch (error) {
     return handleError(error);
   }
+};
+
+export const getTestFeatureByProjectId = (projectId) => {
+  return axiosClient.get(`/test-feature/get/project/${projectId}`);
 };

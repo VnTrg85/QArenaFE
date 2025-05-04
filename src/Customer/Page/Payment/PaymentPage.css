@@ -1,0 +1,118 @@
+.payment-container {
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: gray;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.tabs button:hover {
+    background-color: #ddd;
+}
+
+.tabs button.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.payment-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.payment-card {
+    border: 2px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 250px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.payment-info {
+    font-size: 14px;
+}
+
+.payment-info div {
+    margin: 5px 0;
+}
+
+.payment-info strong {
+    font-weight: bold;
+}
+
+.pay-button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.pay-button:hover {
+    background-color: #45a049;
+}
+
+.qr-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+
+.qr-popup-content h3 {
+    margin-bottom: 10px;
+}
+
+.qr-code img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.qr-popup-content button {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.qr-popup-content button:hover {
+    background-color: #e53935;
+}

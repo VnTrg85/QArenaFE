@@ -24,6 +24,10 @@ import Team from "../Tester/Page/ProjectDetail/Team/Team";
 import Profile from "../Tester/Page/Profile/Profile";
 import Activity from "../Tester/Page/Activity/Activity";
 import ListBugPage from "../Customer/Page/ListBug/ListBugPage";
+import NotificationPage from "../Customer/Page/Notification/NotificationPage";
+import MessagePage from "../Customer/Page/Message/MessagePage";
+import ProjectPayoutBugPage from "../Customer/Page/Payment/PaymentPage";
+
 const validRoutes = ["", "dGVzdGVy/"];
 const router = createBrowserRouter([
 	{
@@ -134,7 +138,7 @@ const router = createBrowserRouter([
 				element: <DashboardLayout />,
 				children: [
 					{
-						path: "",
+						path: "dashboard",
 						element: <Dashboard />,
 					},
 					{
@@ -142,16 +146,28 @@ const router = createBrowserRouter([
 						element: <ProjectPage />,
 					},
 					{
-						path: "project/:id", 
-						element:<ProjectDetailPage/>,
+						path: "project/:id",
+						element: <ProjectDetailPage />,
 					},
 					{
-						path: "project/create", 
-						element:<ProjectModal/>,
+						path: "project/create",
+						element: <ProjectModal />,
 					},
 					{
 						path: "project/list-bug/:projectId", 
 						element:<ListBugPage/>,
+					},
+					{
+						path: "notification", 
+						element:<NotificationPage/>,
+					},
+					{
+						path: "message", 
+						element:<MessagePage/>,
+					},
+					{
+						path: "payment", 
+						element:<ProjectPayoutBugPage/>,
 					},
 				],
 			},
